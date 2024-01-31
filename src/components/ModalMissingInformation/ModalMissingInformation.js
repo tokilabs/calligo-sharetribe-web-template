@@ -17,6 +17,9 @@ import css from './ModalMissingInformation.module.css';
 const MISSING_INFORMATION_MODAL_WHITELIST = [
   'LoginPage',
   'SignupPage',
+  'TherapyPage',
+  'TherapistPage',
+  'ManifestPage',
   'ContactDetailsPage',
   'EmailVerificationPage',
   'PasswordResetPage',

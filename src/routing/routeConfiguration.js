@@ -61,13 +61,13 @@ const RedirectToLandingPage = () => <NamedRedirect name="LandingPage" />;
 // Our routes are exact by default.
 // See behaviour from Routes.js where Route is created.
 const routeConfiguration = (layoutConfig) => {
-  const SearchPage = layoutConfig.searchPage?.variantType === 'map' 
-    ? SearchPageWithMap 
+  const SearchPage = layoutConfig.searchPage?.variantType === 'map'
+    ? SearchPageWithMap
     : SearchPageWithGrid;
-  const ListingPage = layoutConfig.listingPage?.variantType === 'carousel' 
-    ? ListingPageCarousel 
+  const ListingPage = layoutConfig.listingPage?.variantType === 'carousel'
+    ? ListingPageCarousel
     : ListingPageCoverPhoto;
-  
+
   return [
     {
       path: '/',
@@ -181,6 +181,18 @@ const routeConfiguration = (layoutConfig) => {
       component: AuthenticationPage,
       extraProps: { tab: 'signup' },
       loadData: pageDataLoadingAPI.AuthenticationPage.loadData,
+    },
+    {
+      path: '/s',
+      name: 'TherapyPage',
+    },
+    {
+      path: '/p/therapist',
+      name: 'TherapistPage',
+    },
+    {
+      path: '/p/manifest',
+      name: 'ManifestPage',
     },
     {
       path: '/confirm',

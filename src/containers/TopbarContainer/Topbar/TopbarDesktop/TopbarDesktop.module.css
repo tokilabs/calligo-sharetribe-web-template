@@ -238,7 +238,10 @@
   }
 }
 
-.loginLink {
+.loginLink,
+.therapyLink,
+.therapistLink,
+.manifestLink {
   border-bottom: 0px solid;
   transition: var(--transitionStyleButton);
 
@@ -257,7 +260,10 @@
 }
 
 .signup,
-.login {
+.login,
+.therapy,
+.therapist,
+.manifest {
   composes: textSmall from global;
 
   display: inline-block;

@@ -135,8 +135,9 @@
   }
 }
 
-.createNewListingLink {
+.createNewListingLink, .therapyLink, .therapistLink, .manifestLink {
   composes: buttonPrimary from global;
+  margin-bottom: 5px;
 }
 
 .authenticationGreeting {

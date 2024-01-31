@@ -145,13 +145,28 @@ const TopbarDesktop = props => {
         alt={intl.formatMessage({ id: 'TopbarDesktop.logo' }, { marketplaceName })}
       />
       {search}
-      <NamedLink className={css.createListingLink} name="NewListingPage">
+      {/* <NamedLink className={css.createListingLink} name="NewListingPage">
         <span className={css.createListing}>
           <FormattedMessage id="TopbarDesktop.createListing" />
         </span>
-      </NamedLink>
+      </NamedLink> */}
       {inboxLink}
       {profileMenu}
+      <NamedLink className={css.therapyLink} name="TherapyPage">
+        <span className={css.therapy}>
+          <FormattedMessage id="TopbarDesktop.therapy" />
+        </span>
+      </NamedLink>
+      <NamedLink className={css.therapistLink} name="TherapistPage">
+        <span className={css.therapist}>
+          <FormattedMessage id="TopbarDesktop.therapist" />
+        </span>
+      </NamedLink>
+      <NamedLink className={css.manifestLink} name="ManifestPage">
+        <span className={css.manifest}>
+          <FormattedMessage id="TopbarDesktop.manifest" />
+        </span>
+      </NamedLink>
       {signupLink}
       {loginLink}
     </nav>
