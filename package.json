@@ -141,5 +141,6 @@
     "singleQuote": true,
     "trailingComma": "es5",
     "proseWrap": "always"
-  }
+  },
+  "packageManager": "yarn@4.0.2"
 }
