@@ -120,7 +120,9 @@
     "test-server": "jest ./server/**/*.test.js",
     "heroku-postbuild": "yarn run build",
     "postinstall": "patch-package",
-    "translate": "node scripts/translations.js"
+    "translate": "node scripts/translations.js",
+    "docker:build": "docker build -t calligo-sharetribe .",
+    "docker:run": "docker run -p 3000:3000 calligo-sharetribe"
   },
   "browserslist": {
     "production": [
