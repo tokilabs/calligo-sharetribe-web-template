@@ -72,8 +72,14 @@ const routeConfiguration = (layoutConfig) => {
     {
       path: '/',
       name: 'LandingPage',
-      component: LandingPage,
-      loadData: pageDataLoadingAPI.LandingPage.loadData,
+      component: () => (
+        <html>
+        <head>Calligoooooo</head>
+        <body>
+          <h1>Home do Site</h1>
+        </body>
+      </html>
+      ),
     },
     {
       path: '/p/:pageId',
