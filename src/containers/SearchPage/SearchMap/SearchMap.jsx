@@ -10,7 +10,7 @@ import { createSlug } from '../../../util/urlHelpers';
 import { propTypes } from '../../../util/types';
 import { obfuscatedCoordinates, getMapProviderApiAccess } from '../../../util/maps';
 
-import { hasParentWithClassName } from './SearchMap.helpers.js';
+import { hasParentWithClassName } from './SearchMap.helpers';
 import * as searchMapMapbox from './SearchMapWithMapbox';
 import * as searchMapGoogleMaps from './SearchMapWithGoogleMaps';
 import ReusableMapContainer from './ReusableMapContainer';

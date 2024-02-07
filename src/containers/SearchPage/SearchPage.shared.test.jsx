@@ -8,7 +8,7 @@ import {
   pickSearchParamsOnly,
   searchParamsPicker,
   groupListingFieldConfigs,
-} from './SearchPage.shared.js';
+} from './SearchPage.shared';
 
 const urlParams = {
   pub_category: 'men',

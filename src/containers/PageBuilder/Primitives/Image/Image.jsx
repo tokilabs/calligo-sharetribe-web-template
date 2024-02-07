@@ -2,7 +2,7 @@ import React from 'react';
 import { number, objectOf, oneOf, shape, string } from 'prop-types';
 import classNames from 'classnames';
 
-import { AspectRatioWrapper, ResponsiveImage } from '../../../../components/index.js';
+import { AspectRatioWrapper, ResponsiveImage } from '../../../../components/index';
 
 import css from './Image.module.css';
 

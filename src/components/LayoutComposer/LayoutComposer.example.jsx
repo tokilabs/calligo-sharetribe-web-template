@@ -1,6 +1,6 @@
 import React from 'react';
 
-import LayoutComposer from './LayoutComposer.js';
+import LayoutComposer from './LayoutComposer';
 
 // Wrapper with some inline styles
 const GridContent = props => {

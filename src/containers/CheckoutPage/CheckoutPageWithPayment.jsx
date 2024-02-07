@@ -40,7 +40,7 @@ import {
   hasTransactionPassedPendingPayment,
   processCheckoutWithPayment,
   setOrderPageInitialValues,
-} from './CheckoutPageTransactionHelpers.js';
+} from './CheckoutPageTransactionHelpers';
 import { getErrorMessages } from './ErrorMessages';
 
 import CustomTopbar from './CustomTopbar';

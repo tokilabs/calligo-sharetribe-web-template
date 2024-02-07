@@ -5,9 +5,9 @@ import {
   PURCHASE_PROCESS_NAME,
   resolveLatestProcessName,
 } from '../../transactions/transaction';
-import { getStateDataForBookingProcess } from './TransactionPage.stateDataBooking.js';
-import { getStateDataForInquiryProcess } from './TransactionPage.stateDataInquiry.js';
-import { getStateDataForPurchaseProcess } from './TransactionPage.stateDataPurchase.js';
+import { getStateDataForBookingProcess } from './TransactionPage.stateDataBooking';
+import { getStateDataForInquiryProcess } from './TransactionPage.stateDataInquiry';
+import { getStateDataForPurchaseProcess } from './TransactionPage.stateDataPurchase';
 
 const errorShape = shape({
   type: oneOf(['error']).isRequired,

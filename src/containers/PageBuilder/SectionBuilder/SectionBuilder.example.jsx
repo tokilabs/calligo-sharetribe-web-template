@@ -1,5 +1,5 @@
 // Sections are currently defined inside SectionBuilder
-import SectionBuilder from './SectionBuilder.js';
+import SectionBuilder from './SectionBuilder';
 
 const hexYellow = '#FFAA00';
 const hexBlack = '#000000';

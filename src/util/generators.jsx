@@ -5,7 +5,7 @@ import {
   getStartOf,
   stringifyDateToISO8601,
   parseDateTimeString,
-} from './dates.js';
+} from './dates';
 // NOTE: This file imports sanitize.js, which may lead to circular dependency
 
 // This is the order of days as JavaScript understands them

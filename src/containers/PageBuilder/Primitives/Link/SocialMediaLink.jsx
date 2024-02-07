@@ -2,7 +2,7 @@ import React from 'react';
 import { node, string } from 'prop-types';
 import classNames from 'classnames';
 
-import { ExternalLink } from '../../../../components/index.js';
+import { ExternalLink } from '../../../../components/index';
 import {
   facebookIcon,
   instagramIcon,

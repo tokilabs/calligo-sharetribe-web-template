@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { IconSpinner, LayoutComposer } from '../../components/index.js';
-import TopbarContainer from '../../containers/TopbarContainer/TopbarContainer.js';
-import FooterContainer from '../FooterContainer/FooterContainer.js';
+import { IconSpinner, LayoutComposer } from '../../components/index';
+import TopbarContainer from '../../containers/TopbarContainer/TopbarContainer';
+import FooterContainer from '../FooterContainer/FooterContainer';
 
 import { validProps } from './Field';
 
-import SectionBuilder from './SectionBuilder/SectionBuilder.js';
-import StaticPage from './StaticPage.js';
+import SectionBuilder from './SectionBuilder/SectionBuilder';
+import StaticPage from './StaticPage';
 
 import css from './PageBuilder.module.css';
 
