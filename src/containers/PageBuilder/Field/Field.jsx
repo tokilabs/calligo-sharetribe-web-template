@@ -14,7 +14,7 @@ import {
 
 // Primitive components that are actually used for rendering field data
 // These are essentially calling the index.js
-// E.g. import { H1, H2, H3, H4, H5, H6 } from '../Primitives/Heading/index.js';
+// E.g. import { H1, H2, H3, H4, H5, H6 } from '../Primitives/Heading/index';
 import { H1, H2, H3, H4, H5, H6 } from '../Primitives/Heading';
 import { Ul, Ol, Li } from '../Primitives/List';
 import { Ingress } from '../Primitives/Ingress';

@@ -26,7 +26,7 @@ import {
   PrimaryButton,
 } from '../../components';
 
-import { getTransactionTypeData } from './CheckoutPageTransactionHelpers.js';
+import { getTransactionTypeData } from './CheckoutPageTransactionHelpers';
 
 import CustomTopbar from './CustomTopbar';
 import DetailsSideCard from './DetailsSideCard';

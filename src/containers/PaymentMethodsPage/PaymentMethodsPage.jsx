@@ -17,7 +17,7 @@ import FooterContainer from '../../containers/FooterContainer/FooterContainer';
 
 import PaymentMethodsForm from './PaymentMethodsForm/PaymentMethodsForm';
 
-import { createStripeSetupIntent, stripeCustomer } from './PaymentMethodsPage.duck.js';
+import { createStripeSetupIntent, stripeCustomer } from './PaymentMethodsPage.duck';
 
 import css from './PaymentMethodsPage.module.css';
 

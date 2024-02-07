@@ -7,9 +7,9 @@ import {
   getProcess,
 } from '../../transactions/transaction';
 
-import { getStateDataForBookingProcess } from './InboxPage.stateDataBooking.js';
-import { getStateDataForInquiryProcess } from './InboxPage.stateDataInquiry.js';
-import { getStateDataForPurchaseProcess } from './InboxPage.stateDataPurchase.js';
+import { getStateDataForBookingProcess } from './InboxPage.stateDataBooking';
+import { getStateDataForInquiryProcess } from './InboxPage.stateDataInquiry';
+import { getStateDataForPurchaseProcess } from './InboxPage.stateDataPurchase';
 
 export const stateDataShape = shape({
   processName: string.isRequired,

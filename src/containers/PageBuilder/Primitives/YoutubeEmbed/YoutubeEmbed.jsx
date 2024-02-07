@@ -2,9 +2,9 @@ import React from 'react';
 import { string } from 'prop-types';
 import classNames from 'classnames';
 
-import { lazyLoadWithDimensions } from '../../../../util/uiHelpers.js';
+import { lazyLoadWithDimensions } from '../../../../util/uiHelpers';
 
-import { AspectRatioWrapper } from '../../../../components/index.js';
+import { AspectRatioWrapper } from '../../../../components/index';
 
 import css from './YoutubeEmbed.module.css';
 

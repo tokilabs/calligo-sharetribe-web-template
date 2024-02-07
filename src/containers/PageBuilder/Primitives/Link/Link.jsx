@@ -3,10 +3,10 @@ import { node, string } from 'prop-types';
 import classNames from 'classnames';
 import { useLocation } from 'react-router-dom';
 
-import { useRouteConfiguration } from '../../../../context/routeConfigurationContext.js';
-import { matchPathname } from '../../../../util/routes.js';
+import { useRouteConfiguration } from '../../../../context/routeConfigurationContext';
+import { matchPathname } from '../../../../util/routes';
 
-import { NamedLink, ExternalLink } from '../../../../components/index.js';
+import { NamedLink, ExternalLink } from '../../../../components/index';
 import css from './Link.module.css';
 
 export const Link = React.forwardRef((props, ref) => {
