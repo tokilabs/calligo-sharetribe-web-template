@@ -59,7 +59,7 @@ export const EXTENDED_DATA_SCHEMA_TYPES = [
 const propTypes = {};
 
 // Fixed value
-propTypes.value = val => oneOf([val]);
+propTypes.value = (val) => oneOf([val]);
 
 // SDK type instances
 propTypes.uuid = instanceOf(UUID);
@@ -246,7 +246,8 @@ const deletedListingAttributes = shape({
 propTypes.listing = shape({
   id: propTypes.uuid.isRequired,
   type: propTypes.value('listing').isRequired,
-  attributes: oneOfType([listingAttributes, deletedListingAttributes]).isRequired,
+  attributes: oneOfType([listingAttributes, deletedListingAttributes])
+    .isRequired,
   author: propTypes.user,
   images: arrayOf(propTypes.image),
 });
@@ -255,7 +256,8 @@ propTypes.listing = shape({
 propTypes.ownListing = shape({
   id: propTypes.uuid.isRequired,
   type: propTypes.value('ownListing').isRequired,
-  attributes: oneOfType([ownListingAttributes, deletedListingAttributes]).isRequired,
+  attributes: oneOfType([ownListingAttributes, deletedListingAttributes])
+    .isRequired,
   author: propTypes.currentUser,
   images: arrayOf(propTypes.image),
 });
@@ -380,7 +382,12 @@ export const LINE_ITEMS = [
   LINE_ITEM_SHIPPING_FEE,
   LINE_ITEM_PICKUP_FEE,
 ];
-export const LISTING_UNIT_TYPES = [LINE_ITEM_NIGHT, LINE_ITEM_DAY, LINE_ITEM_HOUR, LINE_ITEM_ITEM];
+export const LISTING_UNIT_TYPES = [
+  LINE_ITEM_NIGHT,
+  LINE_ITEM_DAY,
+  LINE_ITEM_HOUR,
+  LINE_ITEM_ITEM,
+];
 
 propTypes.lineItemUnitType = oneOf(LISTING_UNIT_TYPES);
 
@@ -391,7 +398,9 @@ const requiredLineItemPropType = (props, propName, componentName) => {
     return new Error(`Missing line item code prop from ${componentName}.`);
   }
   if (!/^line-item\/.+/.test(prop)) {
-    return new Error(`Invalid line item code value ${prop} passed to ${componentName}.`);
+    return new Error(
+      `Invalid line item code value ${prop} passed to ${componentName}.`
+    );
   }
 };
 
@@ -505,13 +514,15 @@ propTypes.listingFieldsConfig = arrayOf(
 );
 
 const sortConfigOptionWithLabel = shape({
-  key: oneOf(['createdAt', '-createdAt', 'price', '-price', 'relevance']).isRequired,
+  key: oneOf(['createdAt', '-createdAt', 'price', '-price', 'relevance'])
+    .isRequired,
   label: string.isRequired,
   longLabel: string,
 });
 
 const sortConfigOptionWithTranslationKey = shape({
-  key: oneOf(['createdAt', '-createdAt', 'price', '-price', 'relevance']).isRequired,
+  key: oneOf(['createdAt', '-createdAt', 'price', '-price', 'relevance'])
+    .isRequired,
   labelTranslationKey: string.isRequired,
   labelTranslationKeyLong: string,
 });
@@ -521,11 +532,15 @@ propTypes.sortConfig = shape({
   queryParamName: oneOf(['sort']).isRequired,
   relevanceKey: string.isRequired,
   conflictingFilters: arrayOf(string),
-  options: arrayOf(oneOfType([sortConfigOptionWithLabel, sortConfigOptionWithTranslationKey])),
+  options: arrayOf(
+    oneOfType([sortConfigOptionWithLabel, sortConfigOptionWithTranslationKey])
+  ),
 });
 
-export const ERROR_CODE_TRANSACTION_LISTING_NOT_FOUND = 'transaction-listing-not-found';
-export const ERROR_CODE_TRANSACTION_INVALID_TRANSITION = 'transaction-invalid-transition';
+export const ERROR_CODE_TRANSACTION_LISTING_NOT_FOUND =
+  'transaction-listing-not-found';
+export const ERROR_CODE_TRANSACTION_INVALID_TRANSITION =
+  'transaction-invalid-transition';
 export const ERROR_CODE_TRANSACTION_ALREADY_REVIEWED_BY_CUSTOMER =
   'transaction-already-reviewed-by-customer';
 export const ERROR_CODE_TRANSACTION_ALREADY_REVIEWED_BY_PROVIDER =
@@ -539,13 +554,15 @@ export const ERROR_CODE_CHARGE_ZERO_PAYIN = 'transaction-charge-zero-payin';
 export const ERROR_CODE_CHARGE_ZERO_PAYOUT = 'transaction-charge-zero-payout';
 export const ERROR_CODE_EMAIL_TAKEN = 'email-taken';
 export const ERROR_CODE_EMAIL_NOT_FOUND = 'email-not-found';
-export const ERROR_CODE_TOO_MANY_VERIFICATION_REQUESTS = 'email-too-many-verification-requests';
+export const ERROR_CODE_TOO_MANY_VERIFICATION_REQUESTS =
+  'email-too-many-verification-requests';
 export const ERROR_CODE_UPLOAD_OVER_LIMIT = 'request-upload-over-limit';
 export const ERROR_CODE_VALIDATION_INVALID_PARAMS = 'validation-invalid-params';
 export const ERROR_CODE_VALIDATION_INVALID_VALUE = 'validation-invalid-value';
 export const ERROR_CODE_NOT_FOUND = 'not-found';
 export const ERROR_CODE_FORBIDDEN = 'forbidden';
-export const ERROR_CODE_MISSING_STRIPE_ACCOUNT = 'transaction-missing-stripe-account';
+export const ERROR_CODE_MISSING_STRIPE_ACCOUNT =
+  'transaction-missing-stripe-account';
 export const ERROR_CODE_STOCK_OLD_TOTAL_MISMATCH = 'old-total-mismatch';
 
 const ERROR_CODES = [
@@ -591,7 +608,9 @@ propTypes.error = shape({
   message: string,
   status: number,
   statusText: string,
-  apiErrors: arrayOf(oneOfType([propTypes.apiError, propTypes.assetDeliveryApiError])),
+  apiErrors: arrayOf(
+    oneOfType([propTypes.apiError, propTypes.assetDeliveryApiError])
+  ),
 });
 
 // Options for showing just date or date and time on TimeRange and OrderBreakdown
@@ -599,6 +618,10 @@ export const DATE_TYPE_DATE = 'date';
 export const DATE_TYPE_TIME = 'time';
 export const DATE_TYPE_DATETIME = 'datetime';
 
-propTypes.dateType = oneOf([DATE_TYPE_DATE, DATE_TYPE_TIME, DATE_TYPE_DATETIME]);
+propTypes.dateType = oneOf([
+  DATE_TYPE_DATE,
+  DATE_TYPE_TIME,
+  DATE_TYPE_DATETIME,
+]);
 
 export { propTypes };

@@ -1,0 +1,12 @@
+.nav-link {
+  border-bottom: 4px solid var(--marketplaceColor);
+  border-radius: 0;
+  color: var(--marketplaceColorDark);
+  text-decoration: none;
+}
+
+.nav-link span {
+  display: inline-block;
+  margin: 28px 0;
+  text-decoration: inherit;
+}
