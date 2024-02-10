@@ -9,6 +9,7 @@ import PreviewResolverPage from '../containers/PreviewResolverPage/PreviewResolv
 // Otherwise, components will import form container eventually and
 // at that point css bundling / imports will happen in wrong order.
 import { NamedRedirect } from '../components';
+import HomePageHtml from '../site/index.html';
 
 const pageDataLoadingAPI = getPageDataLoadingAPI();
 
@@ -72,14 +73,9 @@ const routeConfiguration = (layoutConfig) => {
     {
       path: '/',
       name: 'LandingPage',
-      component: () => (
-        <html>
-        <head>Calligoooooo</head>
-        <body>
-          <h1>Home do Site</h1>
-        </body>
-      </html>
-      ),
+      component: () => {
+        return <>$!{ HomePageHtml }</>
+      }
     },
     {
       path: '/p/:pageId',
