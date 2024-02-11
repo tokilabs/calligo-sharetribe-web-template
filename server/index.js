@@ -124,6 +124,7 @@ if (TRUST_PROXY === 'true') {
 
 app.use(compression());
 app.use('/static', express.static(path.join(buildPath, 'static')));
+app.use('/_astro', express.static(path.join('..', 'src', 'site', '_astro')));
 app.use(cookieParser());
 
 // We don't serve favicon.ico from root. PNG images are used instead for icons through link elements.
