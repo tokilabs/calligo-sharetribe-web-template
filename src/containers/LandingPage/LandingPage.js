@@ -11,6 +11,8 @@ import { propTypes } from '../../util/types';
 import FallbackPage from './FallbackPage';
 import { ASSET_NAME } from './LandingPage.duck';
 
+import SiteHeader from '../../site/partials/Header/index.html';
+
 const PageBuilder = loadable(() =>
   import(/* webpackChunkName: "PageBuilder" */ '../PageBuilder/PageBuilder')
 );
@@ -18,13 +20,19 @@ const PageBuilder = loadable(() =>
 export const LandingPageComponent = props => {
   const { pageAssetsData, inProgress, error } = props;
 
+  console.log('--------------------------------------');
+  console.log(props);
+  console.log('--------------------------------------');
   return (
-    <PageBuilder
-      pageAssetsData={pageAssetsData?.[camelize(ASSET_NAME)]?.data}
-      inProgress={inProgress}
-      error={error}
-      fallbackPage={<FallbackPage error={error} />}
-    />
+    <>
+      {/* <div dangerouslySetInnerHTML={{ __html: SiteHeader }}></div> */}
+      <PageBuilder
+        pageAssetsData={pageAssetsData?.[camelize(ASSET_NAME)]?.data}
+        inProgress={inProgress}
+        error={error}
+        fallbackPage={<FallbackPage error={error} />}
+      />
+    </>
   );
 };
 

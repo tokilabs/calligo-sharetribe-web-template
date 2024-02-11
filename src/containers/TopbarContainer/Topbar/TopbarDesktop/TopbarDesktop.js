@@ -19,6 +19,7 @@ import {
 import TopbarSearchForm from '../TopbarSearchForm/TopbarSearchForm';
 
 import css from './TopbarDesktop.module.css';
+import { createHeaderLinks } from '../../../../components/calligo/HeaderLink/HeaderLink';
 
 const TopbarDesktop = props => {
   const {
@@ -152,21 +153,10 @@ const TopbarDesktop = props => {
       </NamedLink> */}
       {inboxLink}
       {profileMenu}
-      <NamedLink className={css.therapyLink} name="TherapyPage">
-        <span className={css.therapy}>
-          <FormattedMessage id="TopbarDesktop.therapy" />
-        </span>
-      </NamedLink>
-      <NamedLink className={css.therapistLink} name="TherapistPage">
-        <span className={css.therapist}>
-          <FormattedMessage id="TopbarDesktop.therapist" />
-        </span>
-      </NamedLink>
-      <NamedLink className={css.manifestLink} name="ManifestPage">
-        <span className={css.manifest}>
-          <FormattedMessage id="TopbarDesktop.manifest" />
-        </span>
-      </NamedLink>
+      {createHeaderLinks(
+        [{ id: 'therapy', routeName: 'SearchPage' }, 'therapist', 'manifest'],
+        css
+      )}
       {signupLink}
       {loginLink}
     </nav>

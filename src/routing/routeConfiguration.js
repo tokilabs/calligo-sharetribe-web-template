@@ -184,18 +184,6 @@ const routeConfiguration = (layoutConfig) => {
       loadData: pageDataLoadingAPI.AuthenticationPage.loadData,
     },
     {
-      path: '/s',
-      name: 'TherapyPage',
-    },
-    {
-      path: '/p/therapist',
-      name: 'TherapistPage',
-    },
-    {
-      path: '/p/manifest',
-      name: 'ManifestPage',
-    },
-    {
       path: '/confirm',
       name: 'ConfirmPage',
       component: AuthenticationPage,
