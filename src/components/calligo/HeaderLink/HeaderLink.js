@@ -1,6 +1,8 @@
 import { default as NamedLink } from '../../NamedLink/NamedLink';
 import { FormattedMessage } from '../../../util/reactIntl';
 
+let keyCount = 0;
+
 /**
  * HeaderLink component
  *
@@ -52,13 +54,15 @@ export function createHeaderLinks(pages, css) {
   return pages.map((page, i) => {
     if (typeof page === 'string') {
       // page is a string id, treat as the pageId param of the CMSPage route
-      return <HeaderLink id={page} routeName="CMSPage" params={{ pageId: page }} css={css} />;
+      return (
+        <HeaderLink id={page} routeName="CMSPage" params={{ pageId: page }} css={css} key={i} />
+      );
     } else {
       // page is an object, expect it to have an id and routeName
       const { id, routeName, params } = page;
 
       if (id && routeName) {
-        return <HeaderLink id={id} routeName={routeName} params={params} css={css} />;
+        return <HeaderLink id={id} routeName={routeName} params={params} css={css} key={i} />;
       } else {
         throw new Error(
           `Each page in the array must either be a string with the page id or an object with id, routeName, and (optionally) params.

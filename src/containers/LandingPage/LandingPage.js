@@ -11,8 +11,6 @@ import { propTypes } from '../../util/types';
 import FallbackPage from './FallbackPage';
 import { ASSET_NAME } from './LandingPage.duck';
 
-import SiteHeader from '../../site/partials/Header/index.html';
-
 const PageBuilder = loadable(() =>
   import(/* webpackChunkName: "PageBuilder" */ '../PageBuilder/PageBuilder')
 );

@@ -1,4 +1,5 @@
 import React from 'react';
+import loadable from '@loadable/component';
 import { arrayOf, bool, func, node, oneOf, shape, string } from 'prop-types';
 import classNames from 'classnames';
 
@@ -45,6 +46,21 @@ const defaultSectionComponents = {
 // Section builder //
 //////////////////////
 
+// @integration
+import HeaderPartial from '../../../site/partials/Header/index.html';
+import FooterPartial from '../../../site/partials/Footer/index.html';
+import IntroPartial from '../../../site/partials/Intro/index.html';
+
+// @integration
+const partials = {
+  Header: HeaderPartial,
+  Footer: FooterPartial,
+  Intro: IntroPartial,
+};
+
+// @integration
+const Partial = ({ name }) => <div dangerouslySetInnerHTML={{ __html: partials[name] }}></div>;
+
 const SectionBuilder = props => {
   const { sections, options } = props;
   const { sectionComponents = {}, isInsideContainer, ...otherOption } = options || {};
@@ -81,6 +97,11 @@ const SectionBuilder = props => {
   return (
     <>
       {sections.map((section, index) => {
+        if (section.sectionName?.startsWith('partial:')) {
+          // @integration
+          return <Partial name={section.sectionName.replace('partial:', '')} />;
+        }
+
         const Section = getComponent(section.sectionType);
         // If the default "dark" theme should be applied (when text color is white).
         // By default, this information is stored to customAppearance field
