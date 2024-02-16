@@ -3,7 +3,7 @@
 rm -rf calligo-site-repo
 
 echo "Clonning calligo-site"
-git clone "git@github.com:tokilabs/calligo-site.git" calligo-site-repo
+git clone "https://github.com/tokilabs/calligo-site.git" calligo-site-repo
 
 cd calligo-site-repo
 

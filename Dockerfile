@@ -1,4 +1,6 @@
 FROM node:lts-alpine as build
+RUN apk update && apk add git
+RUN apk add openssh-client
 
 WORKDIR /usr/src/app
 
