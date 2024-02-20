@@ -9,7 +9,7 @@ import PreviewResolverPage from '../containers/PreviewResolverPage/PreviewResolv
 // Otherwise, components will import form container eventually and
 // at that point css bundling / imports will happen in wrong order.
 import { NamedRedirect } from '../components';
-import HomePageHtml from '../site/index.html';
+// import HomePageHtml from '../site/index.html';
 
 const pageDataLoadingAPI = getPageDataLoadingAPI();
 
