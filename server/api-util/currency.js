@@ -23,6 +23,7 @@ const isSafeNumber = decimalValue => {
 const subUnitDivisors = {
   AUD: 100,
   BGN: 100,
+  BRL: 100,
   CAD: 100,
   CHF: 100,
   CNY: 100,

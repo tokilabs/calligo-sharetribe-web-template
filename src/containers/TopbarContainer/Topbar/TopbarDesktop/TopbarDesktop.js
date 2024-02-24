@@ -73,6 +73,17 @@ const TopbarDesktop = props => {
     </NamedLink>
   ) : null;
 
+  const createListing = authenticatedOnClientSide ? (
+    <NamedLink
+      className={css.createListingLink}
+      name="NewListingPage"
+    >
+      <span className={css.createListing}>
+        <FormattedMessage id="TopbarDesktop.createListing" />
+      </span>
+    </NamedLink>
+  ) : null;
+
   const currentPageClass = page => {
     const isAccountSettingsPage =
       page === 'AccountSettingsPage' && ACCOUNT_SETTINGS_PAGES.includes(currentPage);
@@ -138,6 +149,13 @@ const TopbarDesktop = props => {
     </NamedLink>
   );
 
+  const calligoLinks = isAuthenticatedOrJustHydrated ? null : (
+    createHeaderLinks(
+      [{ id: 'therapy', routeName: 'SearchPage' }, 'therapist', 'manifest'],
+      css
+    )
+  );
+
   return (
     <nav className={classes}>
       <LinkedLogo
@@ -146,17 +164,10 @@ const TopbarDesktop = props => {
         alt={intl.formatMessage({ id: 'TopbarDesktop.logo' }, { marketplaceName })}
       />
       {search}
-      {/* <NamedLink className={css.createListingLink} name="NewListingPage">
-        <span className={css.createListing}>
-          <FormattedMessage id="TopbarDesktop.createListing" />
-        </span>
-      </NamedLink> */}
+      {createListing}
       {inboxLink}
       {profileMenu}
-      {createHeaderLinks(
-        [{ id: 'therapy', routeName: 'SearchPage' }, 'therapist', 'manifest'],
-        css
-      )}
+      {calligoLinks}
       {signupLink}
       {loginLink}
     </nav>
