@@ -95,7 +95,7 @@ const defaultConfig = {
     // These assets are not yet editable through Console.
     // However, Sharetribe onboarding might generate them.
     // You could still rely on built-in variables and comment these out.
-    localization: '/general/localization.json',
+    // localization: '/general/localization.json',
     // NOTE: we don't fetch commission configuration here but on the server-side
   },
 
