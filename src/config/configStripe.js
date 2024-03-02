@@ -69,7 +69,6 @@ export const supportedCountries = [
     code: 'BR',
     currency: 'BRL',
     accountConfig: {
-      bsb: true,
       accountNumber: true,
     },
   },

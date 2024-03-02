@@ -70,7 +70,7 @@ const defaultConfig = {
     // First day of week
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Locale/getWeekInfo#return_value
     // 1: Monday
-    // ...
+    // ....
     // 6: Saturday
     // 7: Sunday
     firstDayOfWeek: 1,
