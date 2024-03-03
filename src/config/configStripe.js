@@ -68,6 +68,11 @@ export const supportedCountries = [
     //Brasil
     code: 'BR',
     currency: 'BRL',
+    accountConfig: {
+      bankName: true,
+      bankCode: true,
+      accountNumber: true,
+    },
   },
   {
     // Canada

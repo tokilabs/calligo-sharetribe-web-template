@@ -122,7 +122,7 @@ const MomentLocaleLoader = props => {
     ['en', 'en-US'].includes(locale) || isAlreadyImportedLocale
       ? NoLoader
       : ['pt', 'pt-BR'].includes(locale)
-      ? loadable.lib(() => import(/* webpackChunkName: "fr" */ 'moment/locale/fr'))
+      ? loadable.lib(() => import(/* webpackChunkName: "br" */ 'moment/locale/br'))
       : ['fr', 'fr-FR'].includes(locale)
       ? loadable.lib(() => import(/* webpackChunkName: "fr" */ 'moment/locale/fr'))
       : ['de', 'de-DE'].includes(locale)
