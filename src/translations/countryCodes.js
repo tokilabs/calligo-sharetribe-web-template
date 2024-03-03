@@ -32,7 +32,7 @@ const countryCodes = [
   { code: 'BA', en: 'Bosnia and Herzegovina', fr: 'Bosnie-Herzégovine', es: 'Bosnia y Herzegovina', de: 'Bosnien und Herzegowina' },
   { code: 'BW', en: 'Botswana', fr: 'Botswana', es: 'Botsuana', de: 'Botswana' },
   { code: 'BV', en: 'Bouvet Island', fr: 'Île Bouvet', es: 'Isla Bouvet', de: 'Bouvetinsel' },
-  { code: 'BR', en: 'Brazil', fr: 'Brésil', es: 'Brasil', de: 'Brasilien' },
+  { code: 'BR', en: 'Brazil', fr: 'Brésil', es: 'Brasil', de: 'Brasilien', pt: 'Brasil', },
   { code: 'IO', en: 'British Indian Ocean Territory', fr: 'Territoire britannique de l’Océan Indien', es: 'Territorio Británico del Océano Índico', de: 'Britisches Territorium im Indischen Ozean' },
   { code: 'BN', en: 'Brunei Darussalam', fr: 'Brunei Darussalam', es: 'Brunéi', de: 'Brunei Darussalam' },
   { code: 'BG', en: 'Bulgaria', fr: 'Bulgarie', es: 'Bulgaria', de: 'Bulgarien' },
