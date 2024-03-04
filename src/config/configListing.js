@@ -227,11 +227,11 @@ export const listingFields = [
 
 export const listingTypes = [
   {
-    listingType: 'daily-booking',
-    label: 'Daily booking',
+    listingType: 'instant-booking',
+    label: 'Instant booking',
     transactionType: {
-      process: 'default-booking',
-      alias: 'default-booking/release-1',
+      process: 'calligo-instant-booking',
+      alias: 'calligo-instant-booking/release-1',
       unitType: 'day',
     },
   },
