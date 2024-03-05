@@ -110,6 +110,7 @@ const LayoutWrapperAccountSettingsSideNavComponent = props => {
       id: 'StripePayoutPageTab',
       linkProps: {
         name: 'StripePayoutPage',
+        style: { display: 'none' },
       },
     },
     {
@@ -118,6 +119,7 @@ const LayoutWrapperAccountSettingsSideNavComponent = props => {
       id: 'PaymentMethodsPageTab',
       linkProps: {
         name: 'PaymentMethodsPage',
+        style: { display: 'none' },
       },
     },
   ];
