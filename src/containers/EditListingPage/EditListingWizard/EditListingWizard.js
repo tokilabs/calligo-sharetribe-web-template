@@ -337,6 +337,10 @@ class EditListingWizard extends Component {
 
   handlePublishListing(id) {
     const { onPublishListingDraft, currentUser, stripeAccount, listing, config } = this.props;
+
+    onPublishListingDraft(id);
+
+    /** @task: remove payments
     const processName = listing?.attributes?.publicData?.transactionProcessAlias.split('/')[0];
     const isInquiryProcess = processName === INQUIRY_PROCESS_NAME;
 
@@ -355,6 +359,7 @@ class EditListingWizard extends Component {
         showPayoutDetails: true,
       });
     }
+    */
   }
 
   handlePayoutModalClose() {
@@ -571,6 +576,7 @@ class EditListingWizard extends Component {
             );
           })}
         </Tabs>
+        {/* @task: remove payments
         <Modal
           id="EditListingWizard.payoutModal"
           isOpen={this.state.showPayoutDetails}
@@ -635,7 +641,7 @@ class EditListingWizard extends Component {
               </>
             )}
           </div>
-        </Modal>
+        </Modal> */}
       </div>
     );
   }

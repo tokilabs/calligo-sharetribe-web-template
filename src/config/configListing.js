@@ -227,12 +227,12 @@ export const listingFields = [
 
 export const listingTypes = [
   {
-    listingType: 'instant-booking',
-    label: 'Instant booking',
+    listingType: 'hourly-booking',
+    label: 'Sessão de Terapia',
     transactionType: {
-      process: 'calligo-instant-booking',
-      alias: 'calligo-instant-booking/release-1',
-      unitType: 'day',
+      process: 'calligo-free-booking',
+      alias: 'calligo-free-booking/release',
+      unitType: 'hour',
     },
   },
   // // Here are some examples for other listingTypes
@@ -244,15 +244,6 @@ export const listingTypes = [
   //     process: 'default-booking',
   //     alias: 'default-booking/release-1',
   //     unitType: 'night',
-  //   },
-  // },
-  // {
-  //   listingType: 'hourly-booking',
-  //   label: 'Hourly booking',
-  //   transactionType: {
-  //     process: 'default-booking',
-  //     alias: 'default-booking/release-1',
-  //     unitType: 'hour',
   //   },
   // },
   // {

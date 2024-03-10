@@ -13,32 +13,24 @@
  */
 
 export const transitions = {
-  // When a customer makes a booking to a listing, a transaction is
-  // created with the initial request-payment transition.
-  // At this transition a PaymentIntent is created by Marketplace API.
-  // After this transition, the actual payment must be made on client-side directly to Stripe.
-  REQUEST_PAYMENT: 'transition/request-payment',
 
   // A customer can also initiate a transaction with an inquiry, and
   // then transition that with a request.
   INQUIRE: 'transition/inquire',
-  REQUEST_PAYMENT_AFTER_INQUIRY:
-    'transition/request-payment-after-inquiry',
 
-  // Stripe SDK might need to ask 3D security from customer, in a separate front-end step.
-  // Therefore we need to make another transition to Marketplace API,
-  // to tell that the payment is confirmed.
-  CONFIRM_PAYMENT: 'transition/confirm-payment',
+  // The provider can accept or decline the offer on behalf of the provider
+  PROVIDER_ACCEPT: 'transition/provider-accept',
+  PROVIDER_DECLINE: 'transition/provider-decline',
 
-  // If the payment is not confirmed in the time limit set in transaction process (by default 15min)
-  // the transaction will expire automatically.
-  EXPIRE_PAYMENT: 'transition/expire-payment',
+  // The backend automatically expire the transaction.
+  EXPIRE: 'transition/expire',
 
   // Admin can also cancel the transition.
   CANCEL: 'transition/cancel',
 
   // The backend will mark the transaction completed.
   COMPLETE: 'transition/complete',
+  PROVIDER_COMPLETE: 'transition/provider-complete',
 
   // Reviews are given through transaction transitions. Review 1 can be
   // by provider or customer, and review 2 will be the other party of
@@ -47,10 +39,8 @@ export const transitions = {
   REVIEW_2_BY_PROVIDER: 'transition/review-2-by-provider',
   REVIEW_1_BY_CUSTOMER: 'transition/review-1-by-customer',
   REVIEW_2_BY_CUSTOMER: 'transition/review-2-by-customer',
-  EXPIRE_CUSTOMER_REVIEW_PERIOD:
-    'transition/expire-customer-review-period',
-  EXPIRE_PROVIDER_REVIEW_PERIOD:
-    'transition/expire-provider-review-period',
+  EXPIRE_CUSTOMER_REVIEW_PERIOD: 'transition/expire-customer-review-period',
+  EXPIRE_PROVIDER_REVIEW_PERIOD: 'transition/expire-provider-review-period',
   EXPIRE_REVIEW_PERIOD: 'transition/expire-review-period',
 };
 
@@ -65,12 +55,12 @@ export const transitions = {
  */
 export const states = {
   INITIAL: 'initial',
-  INQUIRY: 'inquiry',
-  PENDING_PAYMENT: 'pending-payment',
-  PAYMENT_EXPIRED: 'payment-expired',
-  BOOKED: 'booked',
-  CANCELED: 'canceled',
+  AWAITING_CONFIRMATION: 'awaiting-confirmation',
+  ACCEPTED: 'accepted',
+  DECLINED: 'declined',
+  EXPIRED: 'expired',
   DELIVERED: 'delivered',
+  CANCELED: 'canceled',
   REVIEWED: 'reviewed',
   REVIEWED_BY_CUSTOMER: 'reviewed-by-customer',
   REVIEWED_BY_PROVIDER: 'reviewed-by-provider',
@@ -89,7 +79,7 @@ export const graph = {
   // id is defined only to support Xstate format.
   // However if you have multiple transaction processes defined,
   // it is best to keep them in sync with transaction process aliases.
-  id: 'calligo-instant-booking/release-1',
+  id: 'calligo-free-booking/release',
 
   // This 'initial' state is a starting point for new transaction
   initial: states.INITIAL,
@@ -98,32 +88,31 @@ export const graph = {
   states: {
     [states.INITIAL]: {
       on: {
-        [transitions.INQUIRE]: states.INQUIRY,
-        [transitions.REQUEST_PAYMENT]: states.PENDING_PAYMENT,
-      },
-    },
-    [states.INQUIRY]: {
-      on: {
-        [transitions.REQUEST_PAYMENT_AFTER_INQUIRY]: states.PENDING_PAYMENT,
+        [transitions.INQUIRE]: states.AWAITING_CONFIRMATION,
       },
     },
 
-    [states.PENDING_PAYMENT]: {
+    [states.AWAITING_CONFIRMATION]: {
       on: {
-        [transitions.EXPIRE_PAYMENT]: states.PAYMENT_EXPIRED,
-        [transitions.CONFIRM_PAYMENT]: states.BOOKED,
+        [transitions.PROVIDER_ACCEPT]: states.ACCEPTED,
+        [transitions.PROVIDER_DECLINE]: states.DECLINED,
+        [transitions.EXPIRE]: states.EXPIRED,
       },
     },
 
-    [states.PAYMENT_EXPIRED]: {},
-    [states.BOOKED]: {
+    [states.DECLINED]: {},
+    [states.EXPIRED]: {},
+
+    [states.ACCEPTED]: {
       on: {
         [transitions.CANCEL]: states.CANCELED,
         [transitions.COMPLETE]: states.DELIVERED,
+        [transitions.PROVIDER_COMPLETE]: states.DELIVERED,
       },
     },
 
     [states.CANCELED]: {},
+
     [states.DELIVERED]: {
       on: {
         [transitions.EXPIRE_REVIEW_PERIOD]: states.REVIEWED,
@@ -153,9 +142,15 @@ export const graph = {
 // The first transition and most of the expiration transitions made by system are not relevant
 export const isRelevantPastTransition = transition => {
   return [
+    transitions.ACCEPT,
+    transitions.PROVIDER_ACCEPT,
     transitions.CANCEL,
     transitions.COMPLETE,
+    transitions.PROVIDER_COMPLETE,
     transitions.CONFIRM_PAYMENT,
+    transitions.DECLINE,
+    transitions.PROVIDER_DECLINE,
+    transitions.EXPIRE,
     transitions.REVIEW_1_BY_CUSTOMER,
     transitions.REVIEW_1_BY_PROVIDER,
     transitions.REVIEW_2_BY_CUSTOMER,
@@ -191,7 +186,7 @@ export const isPrivileged = transition => {
 export const isCompleted = transition => {
   const txCompletedTransitions = [
     transitions.COMPLETE,
-    transitions.OPERATOR_COMPLETE,
+    transitions.PROVIDER_COMPLETE,
     transitions.REVIEW_1_BY_CUSTOMER,
     transitions.REVIEW_1_BY_PROVIDER,
     transitions.REVIEW_2_BY_CUSTOMER,
@@ -206,13 +201,9 @@ export const isCompleted = transition => {
 // Check when transaction is refunded (booking did not happen)
 // In these transitions action/stripe-refund-payment is called
 export const isRefunded = transition => {
-  const txRefundedTransitions = [
-    transitions.EXPIRE_PAYMENT,
-    transitions.EXPIRE,
-    transitions.CANCEL,
-    transitions.DECLINE,
-  ];
-  return txRefundedTransitions.includes(transition);
+  // NOTE from @svallory: I don't know if this export is mandatory or not
+  //      so I'm always returning false since this transaction process has no payment
+  return false;
 };
 
-export const statesNeedingProviderAttention = [states.PREAUTHORIZED];
+export const statesNeedingProviderAttention = [states.AWAITING_CONFIRMATION];

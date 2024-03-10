@@ -1,0 +1,27 @@
+{:remove-surrounding-whitespace?        false
+ :remove-trailing-whitespace?           false
+ :remove-consecutive-blank-lines?       false
+ :insert-missing-whitespace?            false
+ :remove-multiple-non-indenting-spaces? false
+
+ :align-associative?                    false
+ :indents                               {#re ".*" [[:inner 0 :inner 1 :inner 2 :inner 3]]}
+ :test-code                             (transitions    [
+                                                         {
+                                                          :name    :transition/inquire
+                                                          :actor   :actor.role/customer
+                                                          :actions [{:name :action/update-protected-data}]
+                                                          :to      :state/inquiry
+                                                          }
+
+                                                         {
+                                                          :name        :transition/request-payment
+                                                          :actor       :actor.role/customer
+                                                          :actions     [{:name :action/update-protected-data}
+                                                                        {:name   :action/create-pending-booking
+                                                                         :config {:type :time} ;;
+                                                                         }
+                                                                        {:name :action/privileged-set-line-items}
+                                                                        {:name :action/stripe-create-payment-intent}]
+                                                          :to          :state/pending-payment
+                                                          :privileged? true}])}
