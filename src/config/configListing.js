@@ -47,117 +47,117 @@
  *   - requiredMessage (optional):    Message for those fields, which are mandatory.
  */
 export const listingFields = [
-  {
-    key: 'category',
-    scope: 'public',
-    schemaType: 'enum',
-    enumOptions: [
-      { option: 'city-bikes', label: 'City bikes' },
-      { option: 'electric-bikes', label: 'Electric bikes' },
-      { option: 'mountain-bikes', label: 'Mountain bikes' },
-      { option: 'childrens-bikes', label: "Children's bikes" },
-    ],
-    filterConfig: {
-      indexForSearch: true,
-      filterType: 'SelectMultipleFilter',
-      label: 'Category',
-      group: 'primary',
-    },
-    showConfig: {
-      label: 'Category',
-      isDetail: true,
-    },
-    saveConfig: {
-      label: 'Category',
-      placeholderMessage: 'Select an option…',
-      isRequired: true,
-      requiredMessage: 'You need to select a category.',
-    },
-  },
-  {
-    key: 'tire',
-    scope: 'public',
-    schemaType: 'enum',
-    enumOptions: [
-      { option: '29', label: '29' },
-      { option: '28', label: '28' },
-      { option: '27', label: '27' },
-      { option: '26', label: '26' },
-      { option: '24', label: '24' },
-      { option: '20', label: '20' },
-      { option: '18', label: '18' },
-    ],
-    filterConfig: {
-      indexForSearch: true,
-      label: 'Tire size',
-      group: 'secondary',
-    },
-    showConfig: {
-      label: 'Tire size',
-      isDetail: true,
-    },
-    saveConfig: {
-      label: 'Tire size',
-      placeholderMessage: 'Select an option…',
-      isRequired: true,
-      requiredMessage: 'You need to select a tire size.',
-    },
-  },
-  {
-    key: 'brand',
-    scope: 'public',
-    schemaType: 'enum',
-    enumOptions: [
-      { option: 'cube', label: 'Cube' },
-      { option: 'diamant', label: 'Diamant' },
-      { option: 'ghost', label: 'GHOST' },
-      { option: 'giant', label: 'Giant' },
-      { option: 'kalkhoff', label: 'Kalkhoff' },
-      { option: 'kona', label: 'Kona' },
-      { option: 'otler', label: 'Otler' },
-      { option: 'vermont', label: 'Vermont' },
-    ],
-    filterConfig: {
-      indexForSearch: true,
-      label: 'Brand',
-      group: 'secondary',
-    },
-    showConfig: {
-      label: 'Brand',
-      isDetail: true,
-    },
-    saveConfig: {
-      label: 'Brand',
-      placeholderMessage: 'Select an option…',
-      isRequired: true,
-      requiredMessage: 'You need to select a brand.',
-    },
-  },
-  {
-    key: 'accessories',
-    scope: 'public',
-    schemaType: 'multi-enum',
-    enumOptions: [
-      { option: 'bell', label: 'Bell' },
-      { option: 'lights', label: 'Lights' },
-      { option: 'lock', label: 'Lock' },
-      { option: 'mudguard', label: 'Mudguard' },
-    ],
-    filterConfig: {
-      indexForSearch: true,
-      label: 'Accessories',
-      searchMode: 'has_all',
-      group: 'secondary',
-    },
-    showConfig: {
-      label: 'Accessories',
-    },
-    saveConfig: {
-      label: 'Accessories',
-      placeholderMessage: 'Select an option…',
-      isRequired: false,
-    },
-  },
+  // {
+  //   key: 'category',
+  //   scope: 'public',
+  //   schemaType: 'enum',
+  //   enumOptions: [
+  //     { option: 'city-bikes', label: 'City bikes' },
+  //     { option: 'electric-bikes', label: 'Electric bikes' },
+  //     { option: 'mountain-bikes', label: 'Mountain bikes' },
+  //     { option: 'childrens-bikes', label: "Children's bikes" },
+  //   ],
+  //   filterConfig: {
+  //     indexForSearch: true,
+  //     filterType: 'SelectMultipleFilter',
+  //     label: 'Category',
+  //     group: 'primary',
+  //   },
+  //   showConfig: {
+  //     label: 'Category',
+  //     isDetail: true,
+  //   },
+  //   saveConfig: {
+  //     label: 'Category',
+  //     placeholderMessage: 'Select an option…',
+  //     isRequired: true,
+  //     requiredMessage: 'You need to select a category.',
+  //   },
+  // },
+  // {
+  //   key: 'tire',
+  //   scope: 'public',
+  //   schemaType: 'enum',
+  //   enumOptions: [
+  //     { option: '29', label: '29' },
+  //     { option: '28', label: '28' },
+  //     { option: '27', label: '27' },
+  //     { option: '26', label: '26' },
+  //     { option: '24', label: '24' },
+  //     { option: '20', label: '20' },
+  //     { option: '18', label: '18' },
+  //   ],
+  //   filterConfig: {
+  //     indexForSearch: true,
+  //     label: 'Tire size',
+  //     group: 'secondary',
+  //   },
+  //   showConfig: {
+  //     label: 'Tire size',
+  //     isDetail: true,
+  //   },
+  //   saveConfig: {
+  //     label: 'Tire size',
+  //     placeholderMessage: 'Select an option…',
+  //     isRequired: true,
+  //     requiredMessage: 'You need to select a tire size.',
+  //   },
+  // },
+  // {
+  //   key: 'brand',
+  //   scope: 'public',
+  //   schemaType: 'enum',
+  //   enumOptions: [
+  //     { option: 'cube', label: 'Cube' },
+  //     { option: 'diamant', label: 'Diamant' },
+  //     { option: 'ghost', label: 'GHOST' },
+  //     { option: 'giant', label: 'Giant' },
+  //     { option: 'kalkhoff', label: 'Kalkhoff' },
+  //     { option: 'kona', label: 'Kona' },
+  //     { option: 'otler', label: 'Otler' },
+  //     { option: 'vermont', label: 'Vermont' },
+  //   ],
+  //   filterConfig: {
+  //     indexForSearch: true,
+  //     label: 'Brand',
+  //     group: 'secondary',
+  //   },
+  //   showConfig: {
+  //     label: 'Brand',
+  //     isDetail: true,
+  //   },
+  //   saveConfig: {
+  //     label: 'Brand',
+  //     placeholderMessage: 'Select an option…',
+  //     isRequired: true,
+  //     requiredMessage: 'You need to select a brand.',
+  //   },
+  // },
+  // {
+  //   key: 'accessories',
+  //   scope: 'public',
+  //   schemaType: 'multi-enum',
+  //   enumOptions: [
+  //     { option: 'bell', label: 'Bell' },
+  //     { option: 'lights', label: 'Lights' },
+  //     { option: 'lock', label: 'Lock' },
+  //     { option: 'mudguard', label: 'Mudguard' },
+  //   ],
+  //   filterConfig: {
+  //     indexForSearch: true,
+  //     label: 'Accessories',
+  //     searchMode: 'has_all',
+  //     group: 'secondary',
+  //   },
+  //   showConfig: {
+  //     label: 'Accessories',
+  //   },
+  //   saveConfig: {
+  //     label: 'Accessories',
+  //     placeholderMessage: 'Select an option…',
+  //     isRequired: false,
+  //   },
+  // },
 
   // // An example of how to use transaction type specific custom fields and private data.
   // {
