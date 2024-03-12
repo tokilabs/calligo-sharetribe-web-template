@@ -158,7 +158,6 @@ export const listingFields = [
   //     isRequired: false,
   //   },
   // },
-
   // // An example of how to use transaction type specific custom fields and private data.
   // {
   //   key: 'note',
@@ -225,13 +224,18 @@ export const listingFields = [
  *                        If defaultListingFields.price is not explicitly set to _false_, price will be shown.
  */
 
+import {
+  FREE_BOOKING_PROCESS_ALIAS,
+  FREE_BOOKING_PROCESS_NAME,
+} from './calligoConstants';
+
 export const listingTypes = [
   {
     listingType: 'hourly-booking',
     label: 'Sessão de Terapia',
     transactionType: {
-      process: 'calligo-free-booking',
-      alias: 'calligo-free-booking/release',
+      process: FREE_BOOKING_PROCESS_NAME,
+      alias: FREE_BOOKING_PROCESS_ALIAS,
       unitType: 'hour',
     },
   },

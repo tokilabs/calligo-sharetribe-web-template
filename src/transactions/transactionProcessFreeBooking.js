@@ -13,10 +13,9 @@
  */
 
 export const transitions = {
-
   // A customer can also initiate a transaction with an inquiry, and
   // then transition that with a request.
-  INQUIRE: 'transition/inquire',
+  INQUIRE_WITHOUT_PAYMENT: 'transition/inquire-without-payment',
 
   // The provider can accept or decline the offer on behalf of the provider
   PROVIDER_ACCEPT: 'transition/provider-accept',
@@ -66,6 +65,8 @@ export const states = {
   REVIEWED_BY_PROVIDER: 'reviewed-by-provider',
 };
 
+import { FREE_BOOKING_PROCESS_ALIAS } from '../config/calligoConstants';
+
 /**
  * Description of transaction process graph
  *
@@ -79,7 +80,7 @@ export const graph = {
   // id is defined only to support Xstate format.
   // However if you have multiple transaction processes defined,
   // it is best to keep them in sync with transaction process aliases.
-  id: 'calligo-free-booking/release',
+  id: FREE_BOOKING_PROCESS_ALIAS,
 
   // This 'initial' state is a starting point for new transaction
   initial: states.INITIAL,
@@ -161,13 +162,19 @@ export const isRelevantPastTransition = transition => {
 // Processes might be different on how reviews are handled.
 // Default processes use two-sided diamond shape, where either party can make the review first
 export const isCustomerReview = transition => {
-  return [transitions.REVIEW_1_BY_CUSTOMER, transitions.REVIEW_2_BY_CUSTOMER].includes(transition);
+  return [
+    transitions.REVIEW_1_BY_CUSTOMER,
+    transitions.REVIEW_2_BY_CUSTOMER,
+  ].includes(transition);
 };
 
 // Processes might be different on how reviews are handled.
 // Default processes use two-sided diamond shape, where either party can make the review first
 export const isProviderReview = transition => {
-  return [transitions.REVIEW_1_BY_PROVIDER, transitions.REVIEW_2_BY_PROVIDER].includes(transition);
+  return [
+    transitions.REVIEW_1_BY_PROVIDER,
+    transitions.REVIEW_2_BY_PROVIDER,
+  ].includes(transition);
 };
 
 // Check if the given transition is privileged.
@@ -177,9 +184,10 @@ export const isProviderReview = transition => {
 // should go through the local API endpoints, or if using JS SDK is
 // enough.
 export const isPrivileged = transition => {
-  return [transitions.REQUEST_PAYMENT, transitions.REQUEST_PAYMENT_AFTER_INQUIRY].includes(
-    transition
-  );
+  return [
+    transitions.REQUEST_PAYMENT,
+    transitions.REQUEST_PAYMENT_AFTER_INQUIRY,
+  ].includes(transition);
 };
 
 // Check when transaction is completed (booking over)

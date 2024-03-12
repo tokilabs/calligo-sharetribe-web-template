@@ -2,10 +2,10 @@
  :format        :v3
  :transitions    [
                   {
-                   :name    :transition/inquire
+                   :name    :transition/inquire-without-payment
                    :actor   :actor.role/customer
+                   :to      :state/awaiting-confirmation
                    :privileged? true
-                   :to          :state/awaiting-confirmation
                    :actions [
                              {
                               :name :action/update-protected-data  }

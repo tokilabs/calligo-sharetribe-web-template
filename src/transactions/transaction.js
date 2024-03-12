@@ -5,6 +5,11 @@ import * as bookingProcess from './transactionProcessBooking';
 import * as inquiryProcess from './transactionProcessInquiry';
 import * as freeBookingProcess from './transactionProcessFreeBooking';
 
+import {
+  FREE_BOOKING_PROCESS_NAME,
+  FREE_BOOKING_PROCESS_ALIAS,
+} from '../config/calligoConstants';
+
 // Supported unit types
 // Note: These are passed to translations/microcopy in certain cases.
 //       Therefore, they can't contain wordbreaks like '-' or space ' '
@@ -18,7 +23,6 @@ export const INQUIRY = 'inquiry';
 export const PURCHASE_PROCESS_NAME = 'default-purchase';
 export const BOOKING_PROCESS_NAME = 'default-booking';
 export const INQUIRY_PROCESS_NAME = 'default-inquiry';
-export const FREE_BOOKING_PROCESS_NAME = 'calligo-free-booking';
 
 /**
  * A process should export:
@@ -54,7 +58,7 @@ const PROCESSES = [
   },
   {
     name: FREE_BOOKING_PROCESS_NAME,
-    alias: `${FREE_BOOKING_PROCESS_NAME}/release`,
+    alias: FREE_BOOKING_PROCESS_ALIAS,
     process: freeBookingProcess,
     unitTypes: [HOUR],
   },
@@ -130,10 +134,16 @@ const getProcessState = process => tx => {
  * @param {String} targetState
  * @param {Array} initialTransitions
  */
-const pickTransitionsToTargetState = (transitionEntries, targetState, initialTransitions) => {
+const pickTransitionsToTargetState = (
+  transitionEntries,
+  targetState,
+  initialTransitions
+) => {
   return transitionEntries.reduce((pickedTransitions, transitionEntry) => {
     const [transition, nextState] = transitionEntry;
-    return nextState === targetState ? [...pickedTransitions, transition] : pickedTransitions;
+    return nextState === targetState
+      ? [...pickedTransitions, transition]
+      : pickedTransitions;
   }, initialTransitions);
 };
 
@@ -199,7 +209,9 @@ const hasPassedState = process => (stateName, tx) => {
     !!txTransitions(tx).find(t => t.transition === transitionName);
 
   return (
-    getTransitionsToState(process, stateName).filter(t => hasPassedTransition(t, tx)).length > 0
+    getTransitionsToState(process, stateName).filter(t =>
+      hasPassedTransition(t, tx)
+    ).length > 0
   );
 };
 
@@ -236,7 +248,9 @@ export const resolveLatestProcessName = processName => {
  */
 export const getProcess = processName => {
   const latestProcessName = resolveLatestProcessName(processName);
-  const processInfo = PROCESSES.find(process => process.name === latestProcessName);
+  const processInfo = PROCESSES.find(
+    process => process.name === latestProcessName
+  );
   if (processInfo) {
     return {
       ...processInfo.process,
@@ -266,7 +280,10 @@ export const getSupportedProcessesInfo = () =>
  */
 export const getAllTransitionsForEveryProcess = () => {
   return PROCESSES.reduce((accTransitions, processInfo) => {
-    return [...accTransitions, ...Object.values(processInfo.process.transitions)];
+    return [
+      ...accTransitions,
+      ...Object.values(processInfo.process.transitions),
+    ];
   }, []);
 };
 
@@ -277,7 +294,9 @@ export const getAllTransitionsForEveryProcess = () => {
  */
 export const isPurchaseProcess = processName => {
   const latestProcessName = resolveLatestProcessName(processName);
-  const processInfo = PROCESSES.find(process => process.name === latestProcessName);
+  const processInfo = PROCESSES.find(
+    process => process.name === latestProcessName
+  );
   return [PURCHASE_PROCESS_NAME].includes(processInfo?.name);
 };
 
@@ -298,8 +317,12 @@ export const isPurchaseProcessAlias = processAlias => {
  */
 export const isBookingProcess = processName => {
   const latestProcessName = resolveLatestProcessName(processName);
-  const processInfo = PROCESSES.find(process => process.name === latestProcessName);
-  return [BOOKING_PROCESS_NAME, FREE_BOOKING_PROCESS_NAME].includes(processInfo?.name);
+  const processInfo = PROCESSES.find(
+    process => process.name === latestProcessName
+  );
+  return [BOOKING_PROCESS_NAME, FREE_BOOKING_PROCESS_NAME].includes(
+    processInfo?.name
+  );
 };
 
 /**
@@ -334,7 +357,10 @@ export const getTransitionsNeedingProviderAttention = () => {
     const process = processInfo.process;
     const processTransitions = statesNeedingProviderAttention.reduce(
       (pickedTransitions, stateName) => {
-        return [...pickedTransitions, ...getTransitionsToState(process, stateName)];
+        return [
+          ...pickedTransitions,
+          ...getTransitionsToState(process, stateName),
+        ];
       },
       []
     );
@@ -417,7 +443,9 @@ export class ConditionalResolver {
       const isWildcard = item => item === CONDITIONAL_RESOLVER_WILDCARD;
       const isMatch = conditions.reduce(
         (isPartialMatch, item, i) =>
-          isPartialMatch && isDefined(item) && (isWildcard(item) || item === this.data[i]),
+          isPartialMatch &&
+          isDefined(item) &&
+          (isWildcard(item) || item === this.data[i]),
         true
       );
       this.resolver = isMatch ? resolver : null;
@@ -431,6 +459,10 @@ export class ConditionalResolver {
   resolve() {
     // This resolves the output against current conditions.
     // Therefore, call for resolve() must be the last call in method chain.
-    return this.resolver ? this.resolver() : this.defaultResolver ? this.defaultResolver() : null;
+    return this.resolver
+      ? this.resolver()
+      : this.defaultResolver
+      ? this.defaultResolver()
+      : null;
   }
 }

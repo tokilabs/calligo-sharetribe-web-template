@@ -122,8 +122,9 @@ const EnhancedCheckoutPage = props => {
       )
     : 'Checkout page is loading data';
 
-  return processName && isInquiryProcess ? (
-    <CheckoutPageWithInquiryProcess
+
+    return processName && true ? (
+      <CheckoutPageWithInquiryProcess
       config={config}
       routeConfiguration={routeConfiguration}
       intl={intl}
@@ -135,22 +136,23 @@ const EnhancedCheckoutPage = props => {
       onInquiryWithoutPayment={onInquiryWithoutPayment}
       onSubmitCallback={onSubmitCallback}
       {...props}
-    />
-  ) : processName && !isInquiryProcess && !speculateTransactionInProgress ? (
-    <CheckoutPageWithPayment
-      config={config}
-      routeConfiguration={routeConfiguration}
-      intl={intl}
-      history={history}
-      processName={processName}
-      sessionStorageKey={STORAGE_KEY}
-      pageData={pageData}
-      setPageData={setPageData}
-      listingTitle={listingTitle}
-      title={title}
-      onSubmitCallback={onSubmitCallback}
-      {...props}
-    />
+      />
+  // @task: remove payments
+  // ) : processName && !isInquiryProcess && !speculateTransactionInProgress ? (
+  //   <CheckoutPageWithPayment
+  //     config={config}
+  //     routeConfiguration={routeConfiguration}
+  //     intl={intl}
+  //     history={history}
+  //     processName={processName}
+  //     sessionStorageKey={STORAGE_KEY}
+  //     pageData={pageData}
+  //     setPageData={setPageData}
+  //     listingTitle={listingTitle}
+  //     title={title}
+  //     onSubmitCallback={onSubmitCallback}
+  //     {...props}
+  //   />
   ) : (
     <Page title={title} scrollingDisabled={scrollingDisabled}>
       <CustomTopbar intl={intl} />
