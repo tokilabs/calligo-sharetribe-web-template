@@ -1,8 +1,18 @@
 {
- :format        :v3
+ :format        :v6
  :transitions    [
                   {
+                  :name    :transition/inquire
+                  :actor   :actor.role/customer
+                  :to      :state/inquiry
+                  :actions [
+                            {
+                             :name :action/update-protected-data  }]
+                  }
+
+                  {
                    :name    :transition/inquire-without-payment
+                   :from    :state/inquiry
                    :actor   :actor.role/customer
                    :to      :state/awaiting-confirmation
                    :privileged? true
