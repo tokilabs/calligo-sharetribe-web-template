@@ -688,11 +688,13 @@ const mergeListingConfig = (hostedConfig, defaultConfigs) => {
 
   // When debugging, include default configs.
   // Otherwise, use listing types and fields from hosted assets.
-  const shouldMerge = mergeDefaultTypesAndFieldsForDebugging(false);
-  const listingTypes = union(hostedListingTypes, defaultListingTypes, 'listingType');
-  const listingFields = shouldMerge
-    ? union(hostedListingFields, defaultListingFields, 'key')
-    : hostedListingFields;
+
+  // @task: remove payments
+  // Disabling listing types from the editor since we cannot customize their transaction processes
+  // const listingTypes = union(hostedListingTypes, defaultListingTypes, 'listingType');
+  const listingTypes = defaultListingTypes;
+
+  const listingFields = union(hostedListingFields, defaultListingFields, 'key');
 
   const listingTypesInUse = getListingTypeStringsInUse(listingTypes);
 
