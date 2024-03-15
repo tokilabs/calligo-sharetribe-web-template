@@ -5,11 +5,6 @@ import * as bookingProcess from './transactionProcessBooking';
 import * as inquiryProcess from './transactionProcessInquiry';
 import * as freeBookingProcess from './transactionProcessFreeBooking';
 
-import {
-  FREE_BOOKING_PROCESS_NAME,
-  FREE_BOOKING_PROCESS_ALIAS,
-} from '../config/calligoConstants';
-
 // Supported unit types
 // Note: These are passed to translations/microcopy in certain cases.
 //       Therefore, they can't contain wordbreaks like '-' or space ' '
@@ -23,6 +18,10 @@ export const INQUIRY = 'inquiry';
 export const PURCHASE_PROCESS_NAME = 'default-purchase';
 export const BOOKING_PROCESS_NAME = 'default-booking';
 export const INQUIRY_PROCESS_NAME = 'default-inquiry';
+import {
+  FREE_BOOKING_PROCESS_NAME,
+  FREE_BOOKING_PROCESS_ALIAS,
+} from '../config/calligoConstants';
 
 /**
  * A process should export:

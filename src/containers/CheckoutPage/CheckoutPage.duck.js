@@ -3,7 +3,10 @@ import { initiatePrivileged, transitionPrivileged } from '../../util/api';
 import { denormalisedResponseEntities } from '../../util/data';
 import { storableError } from '../../util/errors';
 import * as log from '../../util/log';
-import { fetchCurrentUserHasOrdersSuccess, fetchCurrentUser } from '../../ducks/user.duck';
+import {
+  fetchCurrentUserHasOrdersSuccess,
+  fetchCurrentUser,
+} from '../../ducks/user.duck';
 
 // ================ Action types ================ //
 
@@ -13,20 +16,29 @@ export const INITIATE_ORDER_REQUEST = 'app/CheckoutPage/INITIATE_ORDER_REQUEST';
 export const INITIATE_ORDER_SUCCESS = 'app/CheckoutPage/INITIATE_ORDER_SUCCESS';
 export const INITIATE_ORDER_ERROR = 'app/CheckoutPage/INITIATE_ORDER_ERROR';
 
-export const CONFIRM_PAYMENT_REQUEST = 'app/CheckoutPage/CONFIRM_PAYMENT_REQUEST';
-export const CONFIRM_PAYMENT_SUCCESS = 'app/CheckoutPage/CONFIRM_PAYMENT_SUCCESS';
+export const CONFIRM_PAYMENT_REQUEST =
+  'app/CheckoutPage/CONFIRM_PAYMENT_REQUEST';
+export const CONFIRM_PAYMENT_SUCCESS =
+  'app/CheckoutPage/CONFIRM_PAYMENT_SUCCESS';
 export const CONFIRM_PAYMENT_ERROR = 'app/CheckoutPage/CONFIRM_PAYMENT_ERROR';
 
-export const SPECULATE_TRANSACTION_REQUEST = 'app/CheckoutPage/SPECULATE_TRANSACTION_REQUEST';
-export const SPECULATE_TRANSACTION_SUCCESS = 'app/CheckoutPage/SPECULATE_TRANSACTION_SUCCESS';
-export const SPECULATE_TRANSACTION_ERROR = 'app/CheckoutPage/SPECULATE_TRANSACTION_ERROR';
+export const SPECULATE_TRANSACTION_REQUEST =
+  'app/CheckoutPage/SPECULATE_TRANSACTION_REQUEST';
+export const SPECULATE_TRANSACTION_SUCCESS =
+  'app/CheckoutPage/SPECULATE_TRANSACTION_SUCCESS';
+export const SPECULATE_TRANSACTION_ERROR =
+  'app/CheckoutPage/SPECULATE_TRANSACTION_ERROR';
 
-export const STRIPE_CUSTOMER_REQUEST = 'app/CheckoutPage/STRIPE_CUSTOMER_REQUEST';
-export const STRIPE_CUSTOMER_SUCCESS = 'app/CheckoutPage/STRIPE_CUSTOMER_SUCCESS';
+export const STRIPE_CUSTOMER_REQUEST =
+  'app/CheckoutPage/STRIPE_CUSTOMER_REQUEST';
+export const STRIPE_CUSTOMER_SUCCESS =
+  'app/CheckoutPage/STRIPE_CUSTOMER_SUCCESS';
 export const STRIPE_CUSTOMER_ERROR = 'app/CheckoutPage/STRIPE_CUSTOMER_ERROR';
 
-export const INITIATE_INQUIRY_REQUEST = 'app/CheckoutPage/INITIATE_INQUIRY_REQUEST';
-export const INITIATE_INQUIRY_SUCCESS = 'app/CheckoutPage/INITIATE_INQUIRY_SUCCESS';
+export const INITIATE_INQUIRY_REQUEST =
+  'app/CheckoutPage/INITIATE_INQUIRY_REQUEST';
+export const INITIATE_INQUIRY_SUCCESS =
+  'app/CheckoutPage/INITIATE_INQUIRY_SUCCESS';
 export const INITIATE_INQUIRY_ERROR = 'app/CheckoutPage/INITIATE_INQUIRY_ERROR';
 
 // ================ Reducer ================ //
@@ -97,11 +109,19 @@ export default function checkoutPageReducer(state = initialState, action = {}) {
       return { ...state, stripeCustomerFetchError: payload };
 
     case INITIATE_INQUIRY_REQUEST:
-      return { ...state, initiateInquiryInProgress: true, initiateInquiryError: null };
+      return {
+        ...state,
+        initiateInquiryInProgress: true,
+        initiateInquiryError: null,
+      };
     case INITIATE_INQUIRY_SUCCESS:
       return { ...state, initiateInquiryInProgress: false };
     case INITIATE_INQUIRY_ERROR:
-      return { ...state, initiateInquiryInProgress: false, initiateInquiryError: payload };
+      return {
+        ...state,
+        initiateInquiryInProgress: false,
+        initiateInquiryError: payload,
+      };
 
     default:
       return state;
@@ -143,7 +163,9 @@ const confirmPaymentError = e => ({
   payload: e,
 });
 
-export const speculateTransactionRequest = () => ({ type: SPECULATE_TRANSACTION_REQUEST });
+export const speculateTransactionRequest = () => ({
+  type: SPECULATE_TRANSACTION_REQUEST,
+});
 
 export const speculateTransactionSuccess = transaction => ({
   type: SPECULATE_TRANSACTION_SUCCESS,
@@ -164,8 +186,12 @@ export const stripeCustomerError = e => ({
   payload: e,
 });
 
-export const initiateInquiryRequest = () => ({ type: INITIATE_INQUIRY_REQUEST });
-export const initiateInquirySuccess = () => ({ type: INITIATE_INQUIRY_SUCCESS });
+export const initiateInquiryRequest = () => ({
+  type: INITIATE_INQUIRY_REQUEST,
+});
+export const initiateInquirySuccess = () => ({
+  type: INITIATE_INQUIRY_SUCCESS,
+});
 export const initiateInquiryError = e => ({
   type: INITIATE_INQUIRY_ERROR,
   error: true,
@@ -181,13 +207,25 @@ export const initiateOrder = (
   transitionName,
   isPrivilegedTransition
 ) => (dispatch, getState, sdk) => {
+  console.log('initiateOrder', {
+    orderParams,
+    processAlias,
+    transactionId,
+    transitionName,
+    isPrivilegedTransition,
+  });
   dispatch(initiateOrderRequest());
 
   // If we already have a transaction ID, we should transition, not
   // initiate.
   const isTransition = !!transactionId;
 
-  const { deliveryMethod, quantity, bookingDates, ...otherOrderParams } = orderParams;
+  const {
+    deliveryMethod,
+    quantity,
+    bookingDates,
+    ...otherOrderParams
+  } = orderParams;
   const quantityMaybe = quantity ? { stockReservationQuantity: quantity } : {};
   const bookingParamsMaybe = bookingDates || {};
 
@@ -227,7 +265,9 @@ export const initiateOrder = (
 
   const handleError = e => {
     dispatch(initiateOrderError(storableError(e)));
-    const transactionIdMaybe = transactionId ? { transactionId: transactionId.uuid } : {};
+    const transactionIdMaybe = transactionId
+      ? { transactionId: transactionId.uuid }
+      : {};
     log.error(e, 'initiate-order-failed', {
       ...transactionIdMaybe,
       listingId: orderParams.listingId.uuid,
@@ -240,7 +280,12 @@ export const initiateOrder = (
 
   if (isTransition && isPrivilegedTransition) {
     // transition privileged
-    return transitionPrivileged({ isSpeculative: false, orderData, bodyParams, queryParams })
+    return transitionPrivileged({
+      isSpeculative: false,
+      orderData,
+      bodyParams,
+      queryParams,
+    })
       .then(handleSucces)
       .catch(handleError);
   } else if (isTransition) {
@@ -251,7 +296,12 @@ export const initiateOrder = (
       .catch(handleError);
   } else if (isPrivilegedTransition) {
     // initiate privileged
-    return initiatePrivileged({ isSpeculative: false, orderData, bodyParams, queryParams })
+    return initiatePrivileged({
+      isSpeculative: false,
+      orderData,
+      bodyParams,
+      queryParams,
+    })
       .then(handleSucces)
       .catch(handleError);
   } else {
@@ -263,11 +313,11 @@ export const initiateOrder = (
   }
 };
 
-export const confirmPayment = (transactionId, transitionName, transitionParams = {}) => (
-  dispatch,
-  getState,
-  sdk
-) => {
+export const confirmPayment = (
+  transactionId,
+  transitionName,
+  transitionParams = {}
+) => (dispatch, getState, sdk) => {
   dispatch(confirmPaymentRequest());
 
   const bodyParams = {
@@ -289,7 +339,9 @@ export const confirmPayment = (transactionId, transitionName, transitionParams =
     })
     .catch(e => {
       dispatch(confirmPaymentError(storableError(e)));
-      const transactionIdMaybe = transactionId ? { transactionId: transactionId.uuid } : {};
+      const transactionIdMaybe = transactionId
+        ? { transactionId: transactionId.uuid }
+        : {};
       log.error(e, 'initiate-order-failed', {
         ...transactionIdMaybe,
       });
@@ -326,12 +378,45 @@ export const sendMessage = params => (dispatch, getState, sdk) => {
  * @param {*} transitionName 'transition/inquire-without-payment'
  * @returns
  */
-export const initiateInquiryWithoutPayment = (inquiryParams, processAlias, transitionName) => (
-  dispatch,
-  getState,
-  sdk
-) => {
+export const initiateInquiryWithoutPayment = (
+  inquiryParams,
+  processAlias,
+  transitionName,
+  isPrivilegedTransition,
+  orderParams
+) => (dispatch, getState, sdk) => {
+  console.log('initiateInquiryWithoutPayment', {
+    inquiryParams,
+    processAlias,
+    transitionName,
+    isPrivilegedTransition,
+    orderParams,
+  });
   dispatch(initiateInquiryRequest());
+
+  // If we already have a transaction ID, we should transition, not
+  // initiate.
+  const isTransition = false; //!!transactionId;
+
+  const {
+    deliveryMethod,
+    quantity,
+    bookingDates,
+    ...otherOrderParams
+  } = orderParams;
+  const quantityMaybe = quantity ? { stockReservationQuantity: quantity } : {};
+  const bookingParamsMaybe = bookingDates || {};
+
+  // Parameters only for client app's server
+  const orderData = deliveryMethod ? { deliveryMethod } : {};
+
+  // Parameters for Marketplace API
+  const transitionParams = {
+    ...inquiryParams,
+    ...quantityMaybe,
+    ...bookingParamsMaybe,
+    ...otherOrderParams,
+  };
 
   if (!processAlias) {
     const error = new Error('No transaction process attached to listing');
@@ -345,24 +430,49 @@ export const initiateInquiryWithoutPayment = (inquiryParams, processAlias, trans
   const bodyParams = {
     transition: transitionName,
     processAlias,
-    params: inquiryParams,
+    params: transitionParams,
   };
+
   const queryParams = {
     include: ['provider'],
     expand: true,
   };
 
-  return sdk.transactions
-    .initiate(bodyParams, queryParams)
-    .then(response => {
-      const transactionId = response.data.data.id;
-      dispatch(initiateInquirySuccess());
-      return transactionId;
+  const handleSucces = response => {
+    const transactionId = response.data.data.id;
+    dispatch(initiateInquirySuccess());
+    return transactionId;
+  };
+
+  const handleError = e => {
+    dispatch(initiateInquiryError(storableError(e)));
+    throw e;
+  };
+
+  if (isPrivilegedTransition) {
+    return initiatePrivileged({
+      isSpeculative: false,
+      bodyParams,
+      queryParams,
     })
-    .catch(e => {
-      dispatch(initiateInquiryError(storableError(e)));
-      throw e;
-    });
+      .then(handleSucces)
+      .catch(handleError);
+
+    // transition privileged
+    // return transitionPrivileged({
+    //   isSpeculative: false,
+    //   orderData,
+    //   bodyParams,
+    //   queryParams,
+    // })
+    //   .then(handleSucces)
+    //   .catch(handleError);
+  }
+  // transition non-privileged
+  return sdk.transactions
+    .transition(bodyParams, queryParams)
+    .then(handleSucces)
+    .catch(handleError);
 };
 
 /**
@@ -391,7 +501,12 @@ export const speculateTransaction = (
   // initiate.
   const isTransition = !!transactionId;
 
-  const { deliveryMethod, quantity, bookingDates, ...otherOrderParams } = orderParams;
+  const {
+    deliveryMethod,
+    quantity,
+    bookingDates,
+    ...otherOrderParams
+  } = orderParams;
   const quantityMaybe = quantity ? { stockReservationQuantity: quantity } : {};
   const bookingParamsMaybe = bookingDates || {};
 
@@ -444,7 +559,12 @@ export const speculateTransaction = (
 
   if (isTransition && isPrivilegedTransition) {
     // transition privileged
-    return transitionPrivileged({ isSpeculative: true, orderData, bodyParams, queryParams })
+    return transitionPrivileged({
+      isSpeculative: true,
+      orderData,
+      bodyParams,
+      queryParams,
+    })
       .then(handleSuccess)
       .catch(handleError);
   } else if (isTransition) {
@@ -455,7 +575,12 @@ export const speculateTransaction = (
       .catch(handleError);
   } else if (isPrivilegedTransition) {
     // initiate privileged
-    return initiatePrivileged({ isSpeculative: true, orderData, bodyParams, queryParams })
+    return initiatePrivileged({
+      isSpeculative: true,
+      orderData,
+      bodyParams,
+      queryParams,
+    })
       .then(handleSuccess)
       .catch(handleError);
   } else {
@@ -472,7 +597,9 @@ export const speculateTransaction = (
 export const stripeCustomer = () => (dispatch, getState, sdk) => {
   dispatch(stripeCustomerRequest());
 
-  return dispatch(fetchCurrentUser({ include: ['stripeCustomer.defaultPaymentMethod'] }))
+  return dispatch(
+    fetchCurrentUser({ include: ['stripeCustomer.defaultPaymentMethod'] })
+  )
     .then(response => {
       dispatch(stripeCustomerSuccess());
     })

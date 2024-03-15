@@ -89,7 +89,7 @@ export const graph = {
   states: {
     [states.INITIAL]: {
       on: {
-        [transitions.INQUIRE]: states.AWAITING_CONFIRMATION,
+        [transitions.INQUIRE_WITHOUT_PAYMENT]: states.AWAITING_CONFIRMATION,
       },
     },
 
@@ -184,10 +184,7 @@ export const isProviderReview = transition => {
 // should go through the local API endpoints, or if using JS SDK is
 // enough.
 export const isPrivileged = transition => {
-  return [
-    transitions.REQUEST_PAYMENT,
-    transitions.REQUEST_PAYMENT_AFTER_INQUIRY,
-  ].includes(transition);
+  return [transitions.INQUIRE_WITHOUT_PAYMENT].includes(transition);
 };
 
 // Check when transaction is completed (booking over)

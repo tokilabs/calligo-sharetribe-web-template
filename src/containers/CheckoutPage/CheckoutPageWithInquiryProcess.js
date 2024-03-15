@@ -46,7 +46,8 @@ const ErrorMessage = props => {
   const listingNotFound = isTransactionInitiateListingNotFoundError(error);
 
   // No transaction process attached to listing
-  const noTransactionProcessAlias = error?.message === 'No transaction process attached to listing';
+  const noTransactionProcessAlias =
+    error?.message === 'No transaction process attached to listing';
 
   return error ? (
     <p className={css.error}>
@@ -75,6 +76,7 @@ const handleSubmit = (submitting, setSubmitting, props) => values => {
     processName,
     onInquiryWithoutPayment,
     onSubmitCallback,
+    orderParams,
   } = props;
 
   const { inquiryMessage } = values;
@@ -83,8 +85,12 @@ const handleSubmit = (submitting, setSubmitting, props) => values => {
     pageData?.listing?.attributes?.publicData || {};
 
   const process = processName ? getProcess(processName) : null;
-  const transitions = process.transitions;
+  const transitions = process?.transitions;
   const transition = transitions.INQUIRE_WITHOUT_PAYMENT;
+  // @task-tag: Disable payments
+  // We made the INQUIRE_WITHOUT_PAYMENT transition privileged in calligo-free-booking
+  // since for some reason process may be missing, the default is `true`
+  const isPrivileged = process ? process.isPrivileged(transition) : true;
 
   // These are the inquiry parameters for the (one and only) transition
   const inquiryParams = {
@@ -97,14 +103,24 @@ const handleSubmit = (submitting, setSubmitting, props) => values => {
 
   // This makes a single transition directly to the API endpoint
   // (unlike in the payment-related processes, where call is proxied through the server to make privileged transition)
-  onInquiryWithoutPayment(inquiryParams, transactionProcessAlias, transition)
+  onInquiryWithoutPayment(
+    inquiryParams,
+    transactionProcessAlias,
+    transition,
+    isPrivileged,
+    orderParams
+  )
     .then(transactionId => {
       setSubmitting(false);
       onSubmitCallback();
 
-      const orderDetailsPath = pathByRouteName('OrderDetailsPage', routeConfiguration, {
-        id: transactionId.uuid,
-      });
+      const orderDetailsPath = pathByRouteName(
+        'OrderDetailsPage',
+        routeConfiguration,
+        {
+          id: transactionId.uuid,
+        }
+      );
       history.push(orderDetailsPath);
     })
     .catch(err => {
@@ -143,7 +159,9 @@ export const CheckoutPageWithInquiryProcess = props => {
 
   const listingType = publicData?.listingType;
   const listingTypeConfigs = config.listing.listingTypes;
-  const listingTypeConfig = listingTypeConfigs.find(conf => conf.listingType === listingType);
+  const listingTypeConfig = listingTypeConfigs.find(
+    conf => conf.listingType === listingType
+  );
   const showPrice = displayPrice(listingTypeConfig);
 
   return (
@@ -170,7 +188,9 @@ export const CheckoutPageWithInquiryProcess = props => {
               {showPrice && price ? (
                 <>
                   <br />
-                  <span className={css.inquiryPrice}>{formatMoney(intl, price)}</span>
+                  <span className={css.inquiryPrice}>
+                    {formatMoney(intl, price)}
+                  </span>
                 </>
               ) : null}
             </H4>
@@ -190,7 +210,10 @@ export const CheckoutPageWithInquiryProcess = props => {
                   authorDisplayName,
                 } = formRenderProps;
 
-                const classes = classNames(rootClassName || css.root, className);
+                const classes = classNames(
+                  rootClassName || css.root,
+                  className
+                );
                 const submitInProgress = inProgress;
                 const submitDisabled = submitInProgress;
 
@@ -215,13 +238,15 @@ export const CheckoutPageWithInquiryProcess = props => {
                         id={formId ? `${formId}.message` : 'message'}
                         placeholder={intl.formatMessage(
                           {
-                            id: 'CheckoutPageWithInquiryProcess.messagePlaceholder',
+                            id:
+                              'CheckoutPageWithInquiryProcess.messagePlaceholder',
                           },
                           { authorDisplayName }
                         )}
                         validate={validators.requiredAndNonEmptyString(
                           intl.formatMessage({
-                            id: 'CheckoutPageWithInquiryProcess.messageRequired',
+                            id:
+                              'CheckoutPageWithInquiryProcess.messageRequired',
                           })
                         )}
                       />
