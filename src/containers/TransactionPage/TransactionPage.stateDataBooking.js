@@ -54,10 +54,10 @@ export const getStateDataForBookingProcess = (txInfo, processInfo) => {
     .cond([states.AWAITING_CONFIRMATION, PROVIDER], () => {
       const primary = isCustomerBanned
         ? null
-        : actionButtonProps(transitions.ACCEPT, PROVIDER);
+        : actionButtonProps(transitions.PROVIDER_ACCEPT, PROVIDER);
       const secondary = isCustomerBanned
         ? null
-        : actionButtonProps(transitions.DECLINE, PROVIDER);
+        : actionButtonProps(transitions.PROVIDER_DECLINE, PROVIDER);
       return {
         processName,
         processState,
