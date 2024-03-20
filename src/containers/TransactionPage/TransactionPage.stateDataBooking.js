@@ -34,7 +34,9 @@ export const getStateDataForBookingProcess = (txInfo, processInfo) => {
         ? nextTransitions.map(t => t.attributes.name)
         : [];
       const requestAfterInquiry = transitions.REQUEST_PAYMENT_AFTER_INQUIRY;
-      const hasCorrectNextTransition = transitionNames.includes(requestAfterInquiry);
+      const hasCorrectNextTransition = transitionNames.includes(
+        requestAfterInquiry
+      );
       const showOrderPanel = !isProviderBanned && hasCorrectNextTransition;
       return { processName, processState, showOrderPanel };
     })
@@ -42,11 +44,36 @@ export const getStateDataForBookingProcess = (txInfo, processInfo) => {
       return { processName, processState, showDetailCardHeadings: true };
     })
     .cond([states.PREAUTHORIZED, CUSTOMER], () => {
-      return { processName, processState, showDetailCardHeadings: true, showExtraInfo: true };
+      return {
+        processName,
+        processState,
+        showDetailCardHeadings: true,
+        showExtraInfo: true,
+      };
+    })
+    .cond([states.AWAITING_CONFIRMATION, PROVIDER], () => {
+      const primary = isCustomerBanned
+        ? null
+        : actionButtonProps(transitions.ACCEPT, PROVIDER);
+      const secondary = isCustomerBanned
+        ? null
+        : actionButtonProps(transitions.DECLINE, PROVIDER);
+      return {
+        processName,
+        processState,
+        showDetailCardHeadings: true,
+        showActionButtons: true,
+        primaryButtonProps: primary,
+        secondaryButtonProps: secondary,
+      };
     })
     .cond([states.PREAUTHORIZED, PROVIDER], () => {
-      const primary = isCustomerBanned ? null : actionButtonProps(transitions.ACCEPT, PROVIDER);
-      const secondary = isCustomerBanned ? null : actionButtonProps(transitions.DECLINE, PROVIDER);
+      const primary = isCustomerBanned
+        ? null
+        : actionButtonProps(transitions.ACCEPT, PROVIDER);
+      const secondary = isCustomerBanned
+        ? null
+        : actionButtonProps(transitions.DECLINE, PROVIDER);
       return {
         processName,
         processState,
@@ -87,7 +114,12 @@ export const getStateDataForBookingProcess = (txInfo, processInfo) => {
       };
     })
     .cond([states.REVIEWED, _], () => {
-      return { processName, processState, showDetailCardHeadings: true, showReviews: true };
+      return {
+        processName,
+        processState,
+        showDetailCardHeadings: true,
+        showReviews: true,
+      };
     })
     .default(() => {
       // Default values for other states
