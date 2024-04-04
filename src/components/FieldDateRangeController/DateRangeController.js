@@ -132,6 +132,7 @@ class DateRangeController extends Component {
       render,
       ...controllerProps
     } = this.props;
+    moment.locale('pt-br');
 
     const classes = classNames(rootClassName || css.inputRoot, className);
 

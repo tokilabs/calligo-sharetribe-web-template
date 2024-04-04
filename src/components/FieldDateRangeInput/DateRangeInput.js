@@ -237,6 +237,8 @@ class DateRangeInputComponent extends Component {
       ...datePickerProps
     } = this.props;
 
+    moment.locale('pt-br');
+
     const initialStartMoment = initialDates ? moment(initialDates.startDate) : null;
     const initialEndMoment = initialDates ? moment(initialDates.endDate) : null;
     const startDate =

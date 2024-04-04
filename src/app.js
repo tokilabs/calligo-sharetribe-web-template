@@ -77,7 +77,10 @@ const messagesInLocale = {};
 // If translation key is missing from `messagesInLocale` (e.g. fr.json),
 // corresponding key will be added to messages from `defaultMessages` (en.json)
 // to prevent missing translation key errors.
-const addMissingTranslations = (sourceLangTranslations, targetLangTranslations) => {
+const addMissingTranslations = (
+  sourceLangTranslations,
+  targetLangTranslations
+) => {
   const sourceKeys = Object.keys(sourceLangTranslations);
   const targetKeys = Object.keys(targetLangTranslations);
 
@@ -122,18 +125,32 @@ const MomentLocaleLoader = props => {
     ['en', 'en-US'].includes(locale) || isAlreadyImportedLocale
       ? NoLoader
       : ['pt', 'pt-BR'].includes(locale)
-      ? loadable.lib(() => import(/* webpackChunkName: "br" */ 'moment/locale/br'))
+      ? loadable.lib(() =>
+          import(/* webpackChunkName: "br" */ 'moment/locale/br')
+        )
       : ['fr', 'fr-FR'].includes(locale)
-      ? loadable.lib(() => import(/* webpackChunkName: "fr" */ 'moment/locale/fr'))
+      ? loadable.lib(() =>
+          import(/* webpackChunkName: "fr" */ 'moment/locale/fr')
+        )
       : ['de', 'de-DE'].includes(locale)
-      ? loadable.lib(() => import(/* webpackChunkName: "de" */ 'moment/locale/de'))
+      ? loadable.lib(() =>
+          import(/* webpackChunkName: "de" */ 'moment/locale/de')
+        )
       : ['es', 'es-ES'].includes(locale)
-      ? loadable.lib(() => import(/* webpackChunkName: "es" */ 'moment/locale/es'))
+      ? loadable.lib(() =>
+          import(/* webpackChunkName: "es" */ 'moment/locale/es')
+        )
       : ['fi', 'fi-FI'].includes(locale)
-      ? loadable.lib(() => import(/* webpackChunkName: "fi" */ 'moment/locale/fi'))
+      ? loadable.lib(() =>
+          import(/* webpackChunkName: "fi" */ 'moment/locale/fi')
+        )
       : ['nl', 'nl-NL'].includes(locale)
-      ? loadable.lib(() => import(/* webpackChunkName: "nl" */ 'moment/locale/nl'))
-      : loadable.lib(() => import(/* webpackChunkName: "locales" */ 'moment/min/locales.min'));
+      ? loadable.lib(() =>
+          import(/* webpackChunkName: "nl" */ 'moment/locale/nl')
+        )
+      : loadable.lib(() =>
+          import(/* webpackChunkName: "locales" */ 'moment/min/locales.min')
+        );
 
   return (
     <MomentLocale>
@@ -150,12 +167,14 @@ const MomentLocaleLoader = props => {
 const Configurations = props => {
   const { appConfig, children } = props;
   const routeConfig = routeConfiguration(appConfig.layout);
-  const locale = isTestEnv ? 'en' : appConfig.localization.locale;
+  const locale = 'br'; // previously: isTestEnv ? 'en' : appConfig.localization.locale;
 
   return (
     <ConfigurationProvider value={appConfig}>
       <MomentLocaleLoader locale={locale}>
-        <RouteConfigurationProvider value={routeConfig}>{children}</RouteConfigurationProvider>
+        <RouteConfigurationProvider value={routeConfig}>
+          {children}
+        </RouteConfigurationProvider>
       </MomentLocaleLoader>
     </ConfigurationProvider>
   );
@@ -188,13 +207,14 @@ const EnvironmentVariableWarning = props => {
     >
       <div style={{ width: '600px' }}>
         <p>
-          Are you sure you want to reveal to the public web an environment variable called:{' '}
-          <b>{suspiciousEnvKey}</b>
+          Are you sure you want to reveal to the public web an environment
+          variable called: <b>{suspiciousEnvKey}</b>
         </p>
         <p>
-          All the environment variables that start with <i>REACT_APP_</i> prefix will be part of the
-          published React app that's running on a browser. Those variables are, therefore, visible
-          to anyone on the web. Secrets should only be used on a secure environment like the server.
+          All the environment variables that start with <i>REACT_APP_</i> prefix
+          will be part of the published React app that's running on a browser.
+          Those variables are, therefore, visible to anyone on the web. Secrets
+          should only be used on a secure environment like the server.
         </p>
         {containsINTEG(suspiciousEnvKey) ? (
           <p>
@@ -223,7 +243,9 @@ export const ClientApp = props => {
     );
 
     if (suspiciousSECRETKey) {
-      return <EnvironmentVariableWarning suspiciousEnvKey={suspiciousSECRETKey} />;
+      return (
+        <EnvironmentVariableWarning suspiciousEnvKey={suspiciousSECRETKey} />
+      );
     }
   }
 
@@ -243,9 +265,18 @@ export const ClientApp = props => {
   // Note: This is also set on Page component to provide server-side rendering.
   const elem = window.document.documentElement;
   if (appConfig.branding.marketplaceColor) {
-    elem.style.setProperty('--marketplaceColor', appConfig.branding.marketplaceColor);
-    elem.style.setProperty('--marketplaceColorDark', appConfig.branding.marketplaceColorDark);
-    elem.style.setProperty('--marketplaceColorLight', appConfig.branding.marketplaceColorLight);
+    elem.style.setProperty(
+      '--marketplaceColor',
+      appConfig.branding.marketplaceColor
+    );
+    elem.style.setProperty(
+      '--marketplaceColorDark',
+      appConfig.branding.marketplaceColorDark
+    );
+    elem.style.setProperty(
+      '--marketplaceColorLight',
+      appConfig.branding.marketplaceColorLight
+    );
   }
   // This gives good input for debugging issues on live environments, but with test it's not needed.
   const logLoadDataCalls = appSettings?.env !== 'test';
@@ -273,7 +304,14 @@ export const ClientApp = props => {
 ClientApp.propTypes = { store: any.isRequired };
 
 export const ServerApp = props => {
-  const { url, context, helmetContext, store, hostedTranslations = {}, hostedConfig = {} } = props;
+  const {
+    url,
+    context,
+    helmetContext,
+    store,
+    hostedTranslations = {},
+    hostedConfig = {},
+  } = props;
   const appConfig = mergeConfig(hostedConfig, defaultConfig);
   HelmetProvider.canUseDOM = false;
 
@@ -308,7 +346,11 @@ export const ServerApp = props => {
   );
 };
 
-ServerApp.propTypes = { url: string.isRequired, context: any.isRequired, store: any.isRequired };
+ServerApp.propTypes = {
+  url: string.isRequired,
+  context: any.isRequired,
+  store: any.isRequired,
+};
 
 /**
  * Render the given route.

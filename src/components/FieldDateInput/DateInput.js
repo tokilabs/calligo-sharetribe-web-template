@@ -141,15 +141,20 @@ class DateInputComponent extends Component {
       ...datePickerProps
     } = this.props;
     /* eslint-enable no-unused-vars */
+    moment.locale('pt-br');
 
     const initialMoment = initialDate ? moment(initialDate) : null;
 
     const date =
-      value && value.date instanceof Date && value.date.toString() !== 'Invalid Date'
+      value &&
+      value.date instanceof Date &&
+      value.date.toString() !== 'Invalid Date'
         ? moment(value.date)
         : initialMoment;
 
-    const placeholder = placeholderText || intl.formatMessage({ id: 'FieldDateInput.placeholder' });
+    const placeholder =
+      placeholderText ||
+      intl.formatMessage({ id: 'FieldDateInput.placeholder' });
 
     const screenReaderInputText =
       screenReaderInputMessage ||

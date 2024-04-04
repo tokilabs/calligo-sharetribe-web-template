@@ -12,12 +12,19 @@ export const END_DATE = 'endDate';
  * @returns {Boolean} true if the browser returns current time zone.
  */
 export const isTimeZoneSupported = () => {
-  if (!Intl || typeof Intl === 'undefined' || typeof Intl.DateTimeFormat === 'undefined') {
+  if (
+    !Intl ||
+    typeof Intl === 'undefined' ||
+    typeof Intl.DateTimeFormat === 'undefined'
+  ) {
     return false;
   }
 
   const dtf = new Intl.DateTimeFormat();
-  if (typeof dtf === 'undefined' || typeof dtf.resolvedOptions === 'undefined') {
+  if (
+    typeof dtf === 'undefined' ||
+    typeof dtf.resolvedOptions === 'undefined'
+  ) {
     return false;
   }
 
@@ -25,7 +32,7 @@ export const isTimeZoneSupported = () => {
   // https://bugs.chromium.org/p/chromium/issues/detail?id=1487920
   // https://bugzilla.mozilla.org/show_bug.cgi?id=1856428
   // Note: we might remove this, when the bugs have been resolved on those browsers
-  if (!dtf.resolvedOptions().timeZone && isValidTimeZone('Europe/Helsinki')) {
+  if (!dtf.resolvedOptions().timeZone && isValidTimeZone('America/Sao_Paulo')) {
     console.error(`Time zone was undefined (new Intl.DateTimeFormat().resolvedOptions().timeZone).
     This might cause problems for date and duration calculation on this browser.`);
     return true;
@@ -88,7 +95,9 @@ export const isValidTimeZone = timeZone => {
  */
 export const getTimeZoneNames = relevantZonesRegExp => {
   const allTimeZones = moment.tz.names();
-  return relevantZonesRegExp ? allTimeZones.filter(z => relevantZonesRegExp.test(z)) : allTimeZones;
+  return relevantZonesRegExp
+    ? allTimeZones.filter(z => relevantZonesRegExp.test(z))
+    : allTimeZones;
 };
 
 /**
@@ -99,7 +108,9 @@ export const getTimeZoneNames = relevantZonesRegExp => {
  * @returns {boolean} true if given parameter is a Date object.
  */
 export const isDate = d =>
-  d && Object.prototype.toString.call(d) === '[object Date]' && !Number.isNaN(d.getTime());
+  d &&
+  Object.prototype.toString.call(d) === '[object Date]' &&
+  !Number.isNaN(d.getTime());
 
 /**
  * Check if the given parameters represent the same Date value (timestamps are compared)
@@ -109,7 +120,8 @@ export const isDate = d =>
  *
  * @returns {boolean} true if given parameters have the same timestamp.
  */
-export const isSameDate = (a, b) => a && isDate(a) && b && isDate(b) && a.getTime() === b.getTime();
+export const isSameDate = (a, b) =>
+  a && isDate(a) && b && isDate(b) && a.getTime() === b.getTime();
 
 /**
  * Compare is dateA is after dateB
@@ -228,7 +240,9 @@ export const timestampToDate = timestamp => {
  * @returns {Date} date in given time zone
  */
 export const timeOfDayFromLocalToTimeZone = (date, timeZone) => {
-  return moment.tz(moment(date).format('YYYY-MM-DD HH:mm:ss'), timeZone).toDate();
+  return moment
+    .tz(moment(date).format('YYYY-MM-DD HH:mm:ss'), timeZone)
+    .toDate();
 };
 
 /**
@@ -257,7 +271,13 @@ export const timeOfDayFromTimeZoneToLocal = (date, timeZone) => {
  *
  * @returns {Date} date object converted to the start of given unit
  */
-export const getStartOf = (date, unit, timeZone, offset = 0, offsetUnit = 'days') => {
+export const getStartOf = (
+  date,
+  unit,
+  timeZone,
+  offset = 0,
+  offsetUnit = 'days'
+) => {
   const m = timeZone
     ? moment(date)
         .clone()
@@ -265,7 +285,8 @@ export const getStartOf = (date, unit, timeZone, offset = 0, offsetUnit = 'days'
     : moment(date).clone();
 
   const startOfUnit = m.startOf(unit);
-  const startOfUnitWithOffset = offset === 0 ? startOfUnit : startOfUnit.add(offset, offsetUnit);
+  const startOfUnitWithOffset =
+    offset === 0 ? startOfUnit : startOfUnit.add(offset, offsetUnit);
   return startOfUnitWithOffset.toDate();
 };
 
@@ -393,9 +414,12 @@ const getTimeZoneMaybe = timeZone => {
  * @returns {String} formatted date
  */
 export const formatDateWithProximity = (date, intl, todayString, opts = {}) => {
-  const paramsValid = intl && date instanceof Date && typeof todayString === 'string';
+  const paramsValid =
+    intl && date instanceof Date && typeof todayString === 'string';
   if (!paramsValid) {
-    throw new Error(`Invalid params for formatDate: (${date}, ${intl}, ${todayString})`);
+    throw new Error(
+      `Invalid params for formatDate: (${date}, ${intl}, ${todayString})`
+    );
   }
 
   // If timeZone parameter is set, use it as formatting option
@@ -481,7 +505,9 @@ export const formatDateIntoPartials = (date, intl, opts = {}) => {
 
   // isSame: if the two moments have different time zones, the time zone of the first moment will be used for the comparison.
   const localizedNow = timeZoneMaybe.timeZone ? now.tz(timeZone) : now;
-  const yearMaybe = localizedNow.isSame(date, 'year') ? {} : { year: 'numeric' };
+  const yearMaybe = localizedNow.isSame(date, 'year')
+    ? {}
+    : { year: 'numeric' };
 
   return {
     date: intl.formatDate(date, {
@@ -586,7 +612,9 @@ const findBookingUnitBoundaries = params => {
   } = params;
 
   if (moment(currentBoundary).isBetween(startMoment, endMoment, null, '[]')) {
-    const timeOfDay = formatDateIntoPartials(currentBoundary, intl, { timeZone })?.time;
+    const timeOfDay = formatDateIntoPartials(currentBoundary, intl, {
+      timeZone,
+    })?.time;
 
     // Choose the previous (aka first) sharp hour boundary,
     // if daylight saving time (DST) creates the same time of day two times.
@@ -605,7 +633,9 @@ const findBookingUnitBoundaries = params => {
     return findBookingUnitBoundaries({
       ...params,
       cumulatedResults: [...cumulatedResults, ...newBoundary],
-      currentBoundary: moment(nextBoundaryFn(currentBoundary, timeUnit, timeZone)),
+      currentBoundary: moment(
+        nextBoundaryFn(currentBoundary, timeUnit, timeZone)
+      ),
     });
   }
   return cumulatedResults;
@@ -669,7 +699,11 @@ export const getSharpHours = (startTime, endTime, timeZone, intl) => {
   // I.e. startTime might be a sharp hour.
   const millisecondBeforeStartTime = new Date(startTime.getTime() - 1);
   return findBookingUnitBoundaries({
-    currentBoundary: findNextBoundary(millisecondBeforeStartTime, 'hour', timeZone),
+    currentBoundary: findNextBoundary(
+      millisecondBeforeStartTime,
+      'hour',
+      timeZone
+    ),
     startMoment: moment(startTime),
     endMoment: moment(endTime),
     nextBoundaryFn: findNextBoundary,
@@ -828,7 +862,9 @@ export const getStartOfWeekAsMoment = (dayMoment, timeZone, firstDayOfWeek) => {
   let d = m.startOf('day');
   const diffToSunday = d.day();
   const adjustOffset =
-    diffToSunday === 0 && firstDayOfWeek > 0 ? -7 + firstDayOfWeek : firstDayOfWeek;
+    diffToSunday === 0 && firstDayOfWeek > 0
+      ? -7 + firstDayOfWeek
+      : firstDayOfWeek;
   const startOfWeek = d.date() - diffToSunday + adjustOffset; // adjust when day is sunday
   return d.clone().date(startOfWeek);
 };
@@ -843,7 +879,11 @@ export const getStartOfWeekAsMoment = (dayMoment, timeZone, firstDayOfWeek) => {
  * @returns return moment object representing the end day of the week where dayMoment belongs to
  */
 export const getEndOfWeekAsMoment = (dayMoment, timeZone, firstDayOfWeek) => {
-  const startOfWeek = getStartOfWeekAsMoment(dayMoment, timeZone, firstDayOfWeek);
+  const startOfWeek = getStartOfWeekAsMoment(
+    dayMoment,
+    timeZone,
+    firstDayOfWeek
+  );
   const endOfWeek = startOfWeek.add(6, 'days').startOf('day');
   return endOfWeek;
 };
@@ -857,7 +897,11 @@ export const getEndOfWeekAsMoment = (dayMoment, timeZone, firstDayOfWeek) => {
  * @returns a Date object representing the first day of the week where given date belongs to
  */
 export const getStartOfWeek = (date, timeZone, firstDayOfWeek) => {
-  return getStartOfWeekAsMoment(moment(date).tz(timeZone), timeZone, firstDayOfWeek).toDate();
+  return getStartOfWeekAsMoment(
+    moment(date).tz(timeZone),
+    timeZone,
+    firstDayOfWeek
+  ).toDate();
 };
 
 /**
