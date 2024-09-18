@@ -86,7 +86,7 @@ const handleSubmit = (submitting, setSubmitting, props) => values => {
 
   const process = processName ? getProcess(processName) : null;
   const transitions = process?.transitions;
-  const transition = transitions.INQUIRE_WITHOUT_PAYMENT;
+  const transition = transitions.INQUIRE;
   // @task-tag: Disable payments
   // We made the INQUIRE_WITHOUT_PAYMENT transition privileged in calligo-free-booking
   // since for some reason process may be missing, the default is `true`
