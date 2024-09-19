@@ -144,7 +144,7 @@ const EnhancedCheckoutPage = props => {
       routeConfiguration={routeConfiguration}
       intl={intl}
       history={history}
-      processName={processName}
+      processName={"calligo-free-booking"}
       pageData={pageData}
       orderParams={orderParams}
       listingTitle={listingTitle}
