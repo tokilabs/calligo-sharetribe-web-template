@@ -105,7 +105,7 @@ const handleSubmit = (submitting, setSubmitting, props) => values => {
   // (unlike in the payment-related processes, where call is proxied through the server to make privileged transition)
   onInquiryWithoutPayment(
     inquiryParams,
-    transactionProcessAlias,
+    "calligo-free-booking/release-4",
     transition,
     isPrivileged,
     orderParams
