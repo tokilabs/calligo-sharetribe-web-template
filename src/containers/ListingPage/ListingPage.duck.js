@@ -293,7 +293,7 @@ export const fetchTimeSlots = (listingId, start, end, timeZone) => (dispatch, ge
 
 export const sendInquiry = (listing, message) => (dispatch, getState, sdk) => {
   dispatch(sendInquiryRequest());
-  const processAlias = listing?.attributes?.publicData?.transactionProcessAlias;
+  const processAlias = "default-booking/release-1";
   if (!processAlias) {
     const error = new Error('No transaction process attached to listing');
     log.error(error, 'listing-process-missing', {
